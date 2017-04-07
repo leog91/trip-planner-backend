@@ -17,6 +17,11 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 public interface ItemRepository extends CrudRepository<Item, Long> {
 
 
+    List<Item> findByName(String name);
+
+
+   // List<Item> findAllUser
+
     //List<Item> findAmmount(String ammount);
 
 
