@@ -1,17 +1,14 @@
-package com.unq.tip;
+package com.unq.tip.webService;
 
+import com.unq.tip.model.Item;
 import com.unq.tip.repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.websocket.server.PathParam;
 import java.util.Collection;
-import java.util.List;
 
 /**
  * Created by Leonardo on 6/4/2017.
@@ -25,6 +22,22 @@ public class ItemRest {
 
     @Autowired
     private ItemRepository itemRepository;
+
+
+
+
+    @RequestMapping(value = "/item/{name}", method = RequestMethod.GET)
+    Collection<Item> readItems(@PathVariable String name) {
+        return this.itemRepository.findByName(name);
+    }
+
+    @RequestMapping(value = "/category/{category}", method = RequestMethod.GET)
+    Collection<Item> readByCategory(@PathVariable String category) {
+        return this.itemRepository.findByCategory(category);
+    }
+
+
+
 
 
 /*
@@ -47,11 +60,6 @@ public class ItemRest {
 */
 
 
-
-    @RequestMapping(value = "/item/{name}", method = RequestMethod.GET)
-    Collection<Item> readItems(@PathVariable String name) {
-        return this.itemRepository.findByName(name);
-    }
 
 
 
@@ -78,8 +86,6 @@ public class ItemRest {
     }
 
 */
-
-
 
 
 }

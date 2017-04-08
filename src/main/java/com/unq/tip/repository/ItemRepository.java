@@ -4,9 +4,8 @@ package com.unq.tip.repository;
 
 import java.util.List;
 
-import com.unq.tip.Item;
+import com.unq.tip.model.Item;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 /**
  *
@@ -19,10 +18,7 @@ public interface ItemRepository extends CrudRepository<Item, Long> {
 
     List<Item> findByName(String name);
 
-
-   // List<Item> findAllUser
-
-    //List<Item> findAmmount(String ammount);
+    List<Item> findByCategory(String category);
 
 
 }

@@ -1,4 +1,4 @@
-package com.unq.tip;
+package com.unq.tip.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

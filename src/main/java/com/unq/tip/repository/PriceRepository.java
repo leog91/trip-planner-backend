@@ -1,10 +1,8 @@
-package com.unq.tip;
+package com.unq.tip.repository;
 
 
-import java.util.List;
-
+import com.unq.tip.model.Price;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 /**
