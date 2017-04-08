@@ -3,40 +3,55 @@ package com.unq.tip.model.builder;
 import com.unq.tip.model.Item;
 import com.unq.tip.model.Price;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 /**
  * Created by Leonardo on 6/4/2017.
  */
 public class ItemBuilder {
 
-    String name = "";
+    String name = "bassename";
     int ammount = 0;
     String currency = "";
     String category = "";
     Price price = new Price(0);
 
-    ItemBuilder withName(String name) {
+    //LocalDateTime date = LocalDate.now().atStartOfDay();
+
+    LocalDate date = LocalDate.now();
+
+
+
+    public ItemBuilder withName(String name) {
         this.name = name;
         return this;
     }
 
-    ItemBuilder withPrice(int price) {
+
+
+    public ItemBuilder withPrice(int price) {
         this.price = new Price(price);
         return this;
     }
 
-    ItemBuilder withCurrency(String currency) {
+    public  ItemBuilder withCurrency(String currency) {
         this.currency = currency;
         return this;
     }
 
-    ItemBuilder withCategory(String category) {
+public     ItemBuilder withCategory(String category) {
         this.category = category;
         return this;
     }
 
+    public ItemBuilder withDate(LocalDate date){
+        this.date = date;
+        return this;
+    }
 
-    Item build() {
-        return new Item(name, ammount, price, currency,category);
+    public Item build() {
+        return new Item(name, ammount, price, currency,category,date);
     }
 
 

@@ -1,6 +1,8 @@
 package com.unq.tip.model;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * Created by leog on 01/04/17.
@@ -18,18 +20,46 @@ public class Item {
 
     private String category;
 
+
+    /*
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+    }
+
+    private LocalDateTime date;
+
+*/
+
+
+    private LocalDate date;
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+
+
     @ManyToOne
     private Price price;
 
     public Item() {
     }
 
-    public Item(String name, int ammount, Price price, String currency, String category) {
+    public Item(String name, int ammount, Price price, String currency, String category, LocalDate date) {
         this.name = name;
         this.ammount = ammount;
         this.price = price;
         this.currency = currency;
         this.category = category;
+        this.date = date;
     }
 
     public String getName() {

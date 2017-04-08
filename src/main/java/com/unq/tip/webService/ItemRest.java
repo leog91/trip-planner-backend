@@ -1,6 +1,7 @@
 package com.unq.tip.webService;
 
 import com.unq.tip.model.Item;
+import com.unq.tip.model.builder.ItemBuilder;
 import com.unq.tip.repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,15 +27,36 @@ public class ItemRest {
 
 
 
+
     @RequestMapping(value = "/item/{name}", method = RequestMethod.GET)
     Collection<Item> readItems(@PathVariable String name) {
         return this.itemRepository.findByName(name);
     }
 
+
     @RequestMapping(value = "/category/{category}", method = RequestMethod.GET)
     Collection<Item> readByCategory(@PathVariable String category) {
         return this.itemRepository.findByCategory(category);
     }
+
+
+
+
+    @RequestMapping(value = "/date", method = RequestMethod.GET)
+    Collection<Item> addDate() {
+
+        //new ItemBuilder().withDate(date);
+        Item item = new ItemBuilder().build();
+
+        itemRepository.save(item);
+        return this.itemRepository.findByName("bassename");
+
+        //return this.itemRepository.findByName();
+    }
+
+
+
+
 
 
 

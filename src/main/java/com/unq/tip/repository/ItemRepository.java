@@ -2,6 +2,7 @@ package com.unq.tip.repository;
 
 
 
+import java.util.Date;
 import java.util.List;
 
 import com.unq.tip.model.Item;
@@ -19,6 +20,8 @@ public interface ItemRepository extends CrudRepository<Item, Long> {
     List<Item> findByName(String name);
 
     List<Item> findByCategory(String category);
+
+    List<Item> findByDate(Date date);
 
 
 }
