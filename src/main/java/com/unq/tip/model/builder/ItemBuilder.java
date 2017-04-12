@@ -2,9 +2,9 @@ package com.unq.tip.model.builder;
 
 import com.unq.tip.model.Item;
 import com.unq.tip.model.Price;
+import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 /**
  * Created by Leonardo on 6/4/2017.
@@ -51,7 +51,7 @@ public     ItemBuilder withCategory(String category) {
     }
 
     public Item build() {
-        return new Item(name, ammount, price, currency,category,date);
+        return new Item(name, ammount, currency,category,date);
     }
 
 

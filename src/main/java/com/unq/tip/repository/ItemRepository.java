@@ -21,7 +21,7 @@ public interface ItemRepository extends CrudRepository<Item, Long> {
 
     List<Item> findByCategory(String category);
 
-    List<Item> findByDate(Date date);
+   // List<Item> findByDate(Date date);
 
 
 }

@@ -3,11 +3,13 @@ package com.unq.tip.webService;
 import com.unq.tip.model.Item;
 import com.unq.tip.model.builder.ItemBuilder;
 import com.unq.tip.repository.ItemRepository;
+import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
@@ -38,6 +40,23 @@ public class ItemRest {
     Collection<Item> readByCategory(@PathVariable String category) {
         return this.itemRepository.findByCategory(category);
     }
+
+
+
+
+    @RequestMapping(
+            value = "/user",
+            method = RequestMethod.GET)//,
+            //consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<?> addUser() {
+
+        Item item1 = new ItemBuilder().withDate(new LocalDate()).build();
+
+        itemRepository.save(item1);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 
 
 

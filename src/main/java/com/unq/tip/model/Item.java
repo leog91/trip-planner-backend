@@ -1,8 +1,10 @@
 package com.unq.tip.model;
 
+
+import org.hibernate.annotations.Type;
+import org.joda.time.LocalDate;
+
 import javax.persistence.*;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 /**
  * Created by leog on 01/04/17.
@@ -17,6 +19,7 @@ public class Item {
     private String name;
     private int ammount;
     private String currency;
+
 
     private String category;
 
@@ -34,7 +37,7 @@ public class Item {
 
 */
 
-
+    //@Type(type="org.joda.time.contrib.hibernate.PersistentDateTime")
     private LocalDate date;
 
     public LocalDate getDate() {
@@ -46,13 +49,15 @@ public class Item {
     }
 
 
-
+/*
     @ManyToOne
     private Price price;
-
+*/
     public Item() {
     }
 
+
+/*
     public Item(String name, int ammount, Price price, String currency, String category, LocalDate date) {
         this.name = name;
         this.ammount = ammount;
@@ -61,6 +66,16 @@ public class Item {
         this.category = category;
         this.date = date;
     }
+*/
+
+    public Item(String name, int ammount, String currency, String category, LocalDate date) {
+        this.name = name;
+        this.ammount = ammount;
+        this.currency = currency;
+        this.category = category;
+        this.date = date;
+    }
+
 
     public String getName() {
         return name;
@@ -78,9 +93,7 @@ public class Item {
         return currency;
     }
 
-    public Price getPrice() {
-        return price;
-    }
+  //  public Price getPrice() {return price; }
 
     public void setName(String name) {
         this.name = name;
@@ -90,9 +103,7 @@ public class Item {
         this.currency = currency;
     }
 
-    public void setPrice(Price price) {
-        this.price = price;
-    }
+    //public void setPrice(Price price) {this.price = price;}
 
     public int getAmmount() {
         return ammount;

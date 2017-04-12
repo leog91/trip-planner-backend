@@ -1,0 +1,233 @@
+[1mdiff --git a/pom.xml b/pom.xml[m
+[1mindex 8298556..b504402 100644[m
+[1m--- a/pom.xml[m
+[1m+++ b/pom.xml[m
+[36m@@ -44,6 +44,53 @@[m
+ 			<artifactId>mysql-connector-java</artifactId>[m
+ 			<scope>runtime</scope>[m
+ 		</dependency>[m
+[32m+[m
+[32m+[m		[32m<!-- Joda Time[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>joda-time</groupId>[m
+[32m+[m			[32m<artifactId>joda-time</artifactId>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>org.jadira.usertype</groupId>[m
+[32m+[m			[32m<artifactId>usertype.core</artifactId>[m
+[32m+[m			[32m<version>4.0.0.GA</version>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m[32m-->[m
+[32m+[m
+[32m+[m		[32m<!-- Jackson json data bind[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>com.fasterxml.jackson.jaxrs</groupId>[m
+[32m+[m			[32m<artifactId>jackson-jaxrs-json-provider</artifactId>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>com.fasterxml.jackson.datatype</groupId>[m
+[32m+[m			[32m<artifactId>jackson-datatype-joda</artifactId>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m[32m-->[m
+[32m+[m
+[32m+[m[32m        <dependency>[m
+[32m+[m[32m            <groupId>joda-time</groupId>[m
+[32m+[m[32m            <artifactId>joda-time</artifactId>[m
+[32m+[m[32m            <version>2.9.2</version>[m
+[32m+[m[32m        </dependency>[m
+[32m+[m
+[32m+[m[32m        <dependency>[m
+[32m+[m[32m            <groupId>joda-time</groupId>[m
+[32m+[m[32m            <artifactId>joda-time-hibernate</artifactId>[m
+[32m+[m[32m            <version>1.4</version>[m
+[32m+[m[32m        </dependency>[m
+[32m+[m
+[32m+[m
+[32m+[m
+[32m+[m
+[32m+[m
+[32m+[m
+[32m+[m
+[32m+[m
+[32m+[m
+[32m+[m
+[32m+[m
+[32m+[m
+ 		<dependency>[m
+ 			<groupId>org.springframework.boot</groupId>[m
+ 			<artifactId>spring-boot-starter-test</artifactId>[m
+[1mdiff --git a/src/main/java/com/unq/tip/model/Item.java b/src/main/java/com/unq/tip/model/Item.java[m
+[1mindex 245db45..1000892 100644[m
+[1m--- a/src/main/java/com/unq/tip/model/Item.java[m
+[1m+++ b/src/main/java/com/unq/tip/model/Item.java[m
+[36m@@ -1,8 +1,10 @@[m
+ package com.unq.tip.model;[m
+ [m
+[32m+[m
+[32m+[m[32mimport org.hibernate.annotations.Type;[m
+[32m+[m[32mimport org.joda.time.LocalDate;[m
+[32m+[m
+ import javax.persistence.*;[m
+[31m-import java.time.LocalDate;[m
+[31m-import java.time.LocalDateTime;[m
+ [m
+ /**[m
+  * Created by leog on 01/04/17.[m
+[36m@@ -18,6 +20,7 @@[m [mpublic class Item {[m
+     private int ammount;[m
+     private String currency;[m
+ [m
+[32m+[m
+     private String category;[m
+ [m
+ [m
+[36m@@ -34,7 +37,7 @@[m [mpublic class Item {[m
+ [m
+ */[m
+ [m
+[31m-[m
+[32m+[m[32m    //@Type(type="org.joda.time.contrib.hibernate.PersistentDateTime")[m
+     private LocalDate date;[m
+ [m
+     public LocalDate getDate() {[m
+[36m@@ -46,13 +49,15 @@[m [mpublic class Item {[m
+     }[m
+ [m
+ [m
+[31m-[m
+[32m+[m[32m/*[m
+     @ManyToOne[m
+     private Price price;[m
+[31m-[m
+[32m+[m[32m*/[m
+     public Item() {[m
+     }[m
+ [m
+[32m+[m
+[32m+[m[32m/*[m
+     public Item(String name, int ammount, Price price, String currency, String category, LocalDate date) {[m
+         this.name = name;[m
+         this.ammount = ammount;[m
+[36m@@ -61,6 +66,16 @@[m [mpublic class Item {[m
+         this.category = category;[m
+         this.date = date;[m
+     }[m
+[32m+[m[32m*/[m
+[32m+[m
+[32m+[m[32m    public Item(String name, int ammount, String currency, String category, LocalDate date) {[m
+[32m+[m[32m        this.name = name;[m
+[32m+[m[32m        this.ammount = ammount;[m
+[32m+[m[32m        this.currency = currency;[m
+[32m+[m[32m        this.category = category;[m
+[32m+[m[32m        this.date = date;[m
+[32m+[m[32m    }[m
+[32m+[m
+ [m
+     public String getName() {[m
+         return name;[m
+[36m@@ -78,9 +93,7 @@[m [mpublic class Item {[m
+         return currency;[m
+     }[m
+ [m
+[31m-    public Price getPrice() {[m
+[31m-        return price;[m
+[31m-    }[m
+[32m+[m[32m  //  public Price getPrice() {return price; }[m
+ [m
+     public void setName(String name) {[m
+         this.name = name;[m
+[36m@@ -90,9 +103,7 @@[m [mpublic class Item {[m
+         this.currency = currency;[m
+     }[m
+ [m
+[31m-    public void setPrice(Price price) {[m
+[31m-        this.price = price;[m
+[31m-    }[m
+[32m+[m[32m    //public void setPrice(Price price) {this.price = price;}[m
+ [m
+     public int getAmmount() {[m
+         return ammount;[m
+[1mdiff --git a/src/main/java/com/unq/tip/model/builder/ItemBuilder.java b/src/main/java/com/unq/tip/model/builder/ItemBuilder.java[m
+[1mindex de52957..3dcbc3c 100644[m
+[1m--- a/src/main/java/com/unq/tip/model/builder/ItemBuilder.java[m
+[1m+++ b/src/main/java/com/unq/tip/model/builder/ItemBuilder.java[m
+[36m@@ -2,9 +2,9 @@[m [mpackage com.unq.tip.model.builder;[m
+ [m
+ import com.unq.tip.model.Item;[m
+ import com.unq.tip.model.Price;[m
+[32m+[m[32mimport org.joda.time.DateTime;[m
+[32m+[m[32mimport org.joda.time.LocalDate;[m
+ [m
+[31m-import java.time.LocalDate;[m
+[31m-import java.time.LocalDateTime;[m
+ [m
+ /**[m
+  * Created by Leonardo on 6/4/2017.[m
+[36m@@ -51,7 +51,7 @@[m [mpublic     ItemBuilder withCategory(String category) {[m
+     }[m
+ [m
+     public Item build() {[m
+[31m-        return new Item(name, ammount, price, currency,category,date);[m
+[32m+[m[32m        return new Item(name, ammount, currency,category,date);[m
+     }[m
+ [m
+ [m
+[1mdiff --git a/src/main/java/com/unq/tip/repository/ItemRepository.java b/src/main/java/com/unq/tip/repository/ItemRepository.java[m
+[1mindex 9adcaf0..a3cad96 100644[m
+[1m--- a/src/main/java/com/unq/tip/repository/ItemRepository.java[m
+[1m+++ b/src/main/java/com/unq/tip/repository/ItemRepository.java[m
+[36m@@ -21,7 +21,7 @@[m [mpublic interface ItemRepository extends CrudRepository<Item, Long> {[m
+ [m
+     List<Item> findByCategory(String category);[m
+ [m
+[31m-    List<Item> findByDate(Date date);[m
+[32m+[m[32m   // List<Item> findByDate(Date date);[m
+ [m
+ [m
+ }[m
+[1mdiff --git a/src/main/java/com/unq/tip/webService/ItemRest.java b/src/main/java/com/unq/tip/webService/ItemRest.java[m
+[1mindex aebe1a5..82912af 100644[m
+[1m--- a/src/main/java/com/unq/tip/webService/ItemRest.java[m
+[1m+++ b/src/main/java/com/unq/tip/webService/ItemRest.java[m
+[36m@@ -3,11 +3,13 @@[m [mpackage com.unq.tip.webService;[m
+ import com.unq.tip.model.Item;[m
+ import com.unq.tip.model.builder.ItemBuilder;[m
+ import com.unq.tip.repository.ItemRepository;[m
+[32m+[m[32mimport org.joda.time.DateTime;[m
+[32m+[m[32mimport org.joda.time.LocalDate;[m
+ import org.springframework.beans.factory.annotation.Autowired;[m
+[31m-import org.springframework.web.bind.annotation.PathVariable;[m
+[31m-import org.springframework.web.bind.annotation.RequestMapping;[m
+[31m-import org.springframework.web.bind.annotation.RequestMethod;[m
+[31m-import org.springframework.web.bind.annotation.RestController;[m
+[32m+[m[32mimport org.springframework.http.HttpStatus;[m
+[32m+[m[32mimport org.springframework.http.MediaType;[m
+[32m+[m[32mimport org.springframework.http.ResponseEntity;[m
+[32m+[m[32mimport org.springframework.web.bind.annotation.*;[m
+ [m
+ import java.util.Collection;[m
+ [m
+[36m@@ -42,6 +44,23 @@[m [mpublic class ItemRest {[m
+ [m
+ [m
+ [m
+[32m+[m[32m    @RequestMapping([m
+[32m+[m[32m            value = "/user",[m
+[32m+[m[32m            method = RequestMethod.GET)//,[m
+[32m+[m[32m            //consumes = MediaType.APPLICATION_JSON_VALUE)[m
+[32m+[m[32m    @ResponseBody[m
+[32m+[m[32m    public ResponseEntity<?> addUser() {[m
+[32m+[m
+[32m+[m[32m        Item item1 = new ItemBuilder().withDate(new LocalDate()).build();[m
+[32m+[m
+[32m+[m[32m        itemRepository.save(item1);[m
+[32m+[m[32m        return new ResponseEntity<>(HttpStatus.OK);[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m
+[32m+[m
+[32m+[m
+[32m+[m
+     @RequestMapping(value = "/date", method = RequestMethod.GET)[m
+     Collection<Item> addDate() {[m
+ [m
