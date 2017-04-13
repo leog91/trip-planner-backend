@@ -36,6 +36,17 @@ public class ItemRest {
     }
 
 
+    @RequestMapping(value = "/item/{date1}/{date2}", method = RequestMethod.GET)
+    Collection<Item> readBetweenDates(@PathVariable String date1,String date2) {
+        LocalDate dateA = new LocalDate().withYear(2009).withMonthOfYear(3).withDayOfMonth(4);
+        //LocalDate dateB = new LocalDate().withYear(2010).withMonthOfYear(3).withDayOfMonth(4);
+        LocalDate dateB = LocalDate.now();
+        return this.itemRepository.findByDateBetween(dateA,dateB);
+    }
+
+
+
+
     @RequestMapping(value = "/category/{category}", method = RequestMethod.GET)
     Collection<Item> readByCategory(@PathVariable String category) {
         return this.itemRepository.findByCategory(category);
