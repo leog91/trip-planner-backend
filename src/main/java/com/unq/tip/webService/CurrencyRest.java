@@ -46,7 +46,7 @@ public class CurrencyRest {
 
 
     @RequestMapping(value = "/add/{day}/{month}/{year}/{codeFrom}/{codeTo}/{ratio}", method = RequestMethod.GET)
-    Currency addRatio(@PathVariable String day,String month,String year, String codeFrom, String codeTo, Integer ratio) {
+    Currency addRatio(@PathVariable Integer day, @PathVariable Integer month, @PathVariable Integer year, @PathVariable String codeFrom, @PathVariable String codeTo, @PathVariable Integer ratio) {
 
 /*
         int iday = Integer.parseInt(day);
@@ -56,17 +56,17 @@ public class CurrencyRest {
 */
 
 
-        //LocalDate date = LocalDate.now().withDayOfMonth(day).withMonthOfYear(month).withYear(year);
+        LocalDate date = LocalDate.now().withDayOfMonth(day).withMonthOfYear(month).withYear(year);
 
         //LocalDate date = LocalDate.now().withDayOfMonth(iday).withMonthOfYear(imonth).withYear(iyear);
 
         //
 
         Currency currency = new CurrencyBuilder()
-                .withDate(LocalDate.now())
+                .withDate(date)
                 .withCodeFrom(codeFrom)
                 .withCodeTo(codeTo)
-                .withRatio(4)
+                .withRatio(ratio)
                 .build();
         return this.currencyRepository.save(currency);
     }
