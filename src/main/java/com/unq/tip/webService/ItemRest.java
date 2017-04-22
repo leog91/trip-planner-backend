@@ -44,6 +44,17 @@ public class ItemRest {
         return this.itemRepository.findByDateBetween(dateA,dateB);
     }
 
+//
+    //
+    @RequestMapping(value = "/item/{date1}/{date2}/{user}", method = RequestMethod.GET)
+    Collection<Item> readBetweenDatesAndUser(@PathVariable String date1,String date2,String user) {
+        LocalDate dateA = new LocalDate().withYear(2009).withMonthOfYear(3).withDayOfMonth(4);
+        //LocalDate dateB = new LocalDate().withYear(2010).withMonthOfYear(3).withDayOfMonth(4);
+        LocalDate dateB = LocalDate.now();
+        return this.itemRepository.findByDateBetweenAndUser(dateA,dateB,"user2");
+    }
+
+
 
 
 
@@ -52,6 +63,20 @@ public class ItemRest {
         return this.itemRepository.findByCategory(category);
     }
 
+
+
+    @RequestMapping(
+            value = "/itemWithUser",
+            method = RequestMethod.GET)//,
+    //consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<?> addItemWithUser() {
+
+        Item item1 = new ItemBuilder().withUser("user2").withDate(new LocalDate()).build();
+
+        itemRepository.save(item1);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
 
 

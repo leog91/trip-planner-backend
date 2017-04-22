@@ -15,7 +15,8 @@ public class ItemBuilder {
     int ammount = 0;
     String currency = "";
     String category = "";
-    Price price = new Price(0);
+    String user = "";
+    int groupSize = 0;
 
     //LocalDateTime date = LocalDate.now().atStartOfDay();
 
@@ -28,12 +29,11 @@ public class ItemBuilder {
         return this;
     }
 
-
-
-    public ItemBuilder withPrice(int price) {
-        this.price = new Price(price);
+    public ItemBuilder withGroupSize(int groupSize){
+        this.groupSize = groupSize;
         return this;
-    }
+}
+
 
     public  ItemBuilder withCurrency(String currency) {
         this.currency = currency;
@@ -50,8 +50,13 @@ public     ItemBuilder withCategory(String category) {
         return this;
     }
 
+    public ItemBuilder withUser(String user){
+        this.user = user;
+        return this;
+    }
+
     public Item build() {
-        return new Item(name, ammount, currency,category,date);
+        return new Item(name, ammount, currency,category,date,user,groupSize);
     }
 
 

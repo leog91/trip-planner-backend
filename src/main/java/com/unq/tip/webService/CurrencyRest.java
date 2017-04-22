@@ -3,6 +3,7 @@ package com.unq.tip.webService;
 import com.unq.tip.model.Currency;
 import com.unq.tip.model.builder.CurrencyBuilder;
 import com.unq.tip.repository.CurrencyRepository;
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +29,61 @@ public class CurrencyRest {
     Collection<Currency> readCurrency(@PathVariable String date, String codeFrom, String codeTo) {
         return this.currencyRepository.findByDate(codeFrom, codeTo, date);
     }
+
+    @RequestMapping(value = "/test", method = RequestMethod.GET)
+    Currency addCT() {
+
+        Currency currency = new CurrencyBuilder()
+                .withDate(LocalDate.now())
+                .withCodeFrom("COP")
+                .withCodeTo("BOL")
+                .withRatio(3)
+                .build();
+
+        return this.currencyRepository.save(currency);
+
+    }
+
+
+    @RequestMapping(value = "/add/{day}/{month}/{year}/{codeFrom}/{codeTo}/{ratio}", method = RequestMethod.GET)
+    Currency addRatio(@PathVariable String day,String month,String year, String codeFrom, String codeTo, Integer ratio) {
+
+/*
+        int iday = Integer.parseInt(day);
+        int imonth = Integer.parseInt(month);
+        int iyear = Integer.parseInt(year);
+        int iratio = Integer.parseInt(ratio);
+*/
+
+
+        //LocalDate date = LocalDate.now().withDayOfMonth(day).withMonthOfYear(month).withYear(year);
+
+        //LocalDate date = LocalDate.now().withDayOfMonth(iday).withMonthOfYear(imonth).withYear(iyear);
+
+        //
+
+        Currency currency = new CurrencyBuilder()
+                .withDate(LocalDate.now())
+                .withCodeFrom(codeFrom)
+                .withCodeTo(codeTo)
+                .withRatio(4)
+                .build();
+        return this.currencyRepository.save(currency);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /*
     //check design

@@ -1,7 +1,6 @@
 package com.unq.tip.model;
 
 
-import org.hibernate.annotations.Type;
 import org.joda.time.LocalDate;
 
 import javax.persistence.*;
@@ -20,8 +19,19 @@ public class Item {
     private int ammount;
     private String currency;
 
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
+
+    private String user;
 
     private String category;
+
+    private int groupSize;
 
 
     /*
@@ -68,12 +78,14 @@ public class Item {
     }
 */
 
-    public Item(String name, int ammount, String currency, String category, LocalDate date) {
+    public Item(String name, int ammount, String currency, String category, LocalDate date, String user,int groupSize) {
         this.name = name;
         this.ammount = ammount;
         this.currency = currency;
+        this.user = user;
         this.category = category;
         this.date = date;
+        this.groupSize = groupSize;
     }
 
 

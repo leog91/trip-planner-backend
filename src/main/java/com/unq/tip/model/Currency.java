@@ -1,5 +1,8 @@
 package com.unq.tip.model;
 
+import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,7 +24,17 @@ public class Currency {
 
     private String codeTo;
 
-    private String date;
+    private LocalDate date;
+
+    private int ratio;
+
+    public int getRatio() {
+        return ratio;
+    }
+
+    public void setRatio(int ratio) {
+        this.ratio = ratio;
+    }
 
     public String getCodeFrom() {
         return codeFrom;
@@ -39,18 +52,19 @@ public class Currency {
         this.codeTo = codeTo;
     }
 
-    public String getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
-    public Currency(String codeFrom, String codeTo, String date) {
+    public Currency(String codeFrom, String codeTo, LocalDate date, int ratio) {
         this.codeFrom = codeFrom;
         this.codeTo = codeTo;
         this.date = date;
+        this.ratio = ratio;
     }
 
     public Currency() {
