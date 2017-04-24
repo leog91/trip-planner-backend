@@ -37,6 +37,19 @@ public class UserRest {
 
 
 
+    @RequestMapping(value = "/logIn/{email}", method = RequestMethod.GET)
+    User logIn(@PathVariable String email) {
+
+        User user = this.userRepository.findOne(email);
+
+        if (user == null){
+            user = new UserBuilder().withEmail(email).build();
+            userRepository.save(user);
+        }
+        return user;
+    }
+
+
 
 
     @RequestMapping(

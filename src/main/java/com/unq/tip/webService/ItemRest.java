@@ -11,7 +11,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Created by Leonardo on 6/4/2017.
@@ -36,6 +38,17 @@ public class ItemRest {
     }
 
 
+
+    @RequestMapping(value = "/categories", method = RequestMethod.GET)
+    Collection<String> categories() {
+        List<String> c= new ArrayList<String>();
+        c.add("Food");c.add("Transport");c.add("Lodging");
+        return c;
+    }
+
+
+
+
     @RequestMapping(value = "/item/{date1}/{date2}", method = RequestMethod.GET)
     Collection<Item> readBetweenDates(@PathVariable String date1,String date2) {
         LocalDate dateA = new LocalDate().withYear(2009).withMonthOfYear(3).withDayOfMonth(4);
@@ -43,6 +56,8 @@ public class ItemRest {
         LocalDate dateB = LocalDate.now();
         return this.itemRepository.findByDateBetween(dateA,dateB);
     }
+
+
 
 //
     //
