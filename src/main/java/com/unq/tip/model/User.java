@@ -17,6 +17,24 @@ public class User {
 
     private int groupSize;
 
+    private String currentCurrency;
+
+    public String getCurrentCurrency() {
+        return currentCurrency;
+    }
+
+    public void setCurrentCurrency(String currentCurrency) {
+        this.currentCurrency = currentCurrency;
+    }
+
+    public int getGroupSize() {
+        return groupSize;
+    }
+
+    public void setGroupSize(int groupSize) {
+        this.groupSize = groupSize;
+    }
+
 /*
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -35,9 +53,10 @@ public class User {
         this.email = email;
     }
 
-    public User(String email,int groupSize) {
+    public User(String email,int groupSize, String currentCurrency) {
         this.email = email;
         this.groupSize = groupSize;
+        this.currentCurrency = currentCurrency;
     }
 
     public User(){}

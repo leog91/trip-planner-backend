@@ -5,6 +5,7 @@ package com.unq.tip.repository;
  */
 
 import com.unq.tip.model.Currency;
+import org.joda.time.LocalDate;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
@@ -16,6 +17,25 @@ import java.util.List;
 public interface CurrencyRepository extends CrudRepository<Currency, Long> {
 
 
-    List<Currency> findByDate(String codeFrom, String codeTo, String date);
+    //List<Currency> findByDate(LocalDate date,String codeFrom, String codeTo);
+
+    List<Currency> findByDate(LocalDate date);
+
+    List<Currency> findByDateAndCodeFromAndCodeTo(LocalDate date,String codeFrom, String codeTo);
+
+
+
+    /*
+    Currency findByCodeFromAndCodeToAndDate(Str);
+
+    private String codeFrom;
+
+    private String codeTo;
+
+    private LocalDate date;
+
+*/
+    //t
+    //Currency findCurrency(Currency currency);
 
 }

@@ -19,7 +19,7 @@ import java.util.List;
  * Created by Leonardo on 6/4/2017.
  */
 
-
+//@CrossOrigin(origins = "http://localhost:9000", maxAge = 3600)
 @RestController
 @RequestMapping("/item")
 public class ItemRest {
@@ -29,7 +29,21 @@ public class ItemRest {
     private ItemRepository itemRepository;
 
 
+    @RequestMapping(value = "/add/{email}/{day}/{month}/{year}/{name}/{amount}/{currency}/{category}/{groupSize}", method = RequestMethod.GET)
+    Item addItem(@PathVariable String email, @PathVariable Integer day, @PathVariable Integer month, @PathVariable Integer year, @PathVariable String name,
+                 @PathVariable Integer amount, @PathVariable String currency, @PathVariable String category,@PathVariable Integer groupSize) {
 
+        LocalDate date = LocalDate.now().withDayOfMonth(day).withMonthOfYear(month).withYear(year);
+       // http://localhost:8080/item/leog91@gmail.com/29/3/2017/baseName/0/ARS/general
+        Item item = new ItemBuilder()
+                .withDate(date)
+                .withCurrency(currency)
+                .withUser(email)
+                .withName(name)
+                .withGroupSize(groupSize)
+                .build();
+        return this.itemRepository.save(item);
+    }
 
 
     @RequestMapping(value = "/item/{name}", method = RequestMethod.GET)

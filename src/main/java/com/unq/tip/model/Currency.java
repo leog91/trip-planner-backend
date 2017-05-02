@@ -1,12 +1,21 @@
 package com.unq.tip.model;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
+import sun.awt.Symbol;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 
 /**
@@ -66,6 +75,121 @@ public class Currency {
         this.date = date;
         this.ratio = ratio;
     }
+
+/*
+    public String requestFromApi()throws IOException{
+
+
+        String sURL = "http://freegeoip.net/json/"; //just a string
+
+        // Connect to the URL using java's native library
+        URL url = new URL(sURL);
+        HttpURLConnection request = (HttpURLConnection) url.openConnection();
+        request.connect();
+
+        // Convert to a JSON object to print data
+        JsonParser jp = new JsonParser(); //from gson
+        JsonElement root = jp.parse(new InputStreamReader((InputStream) request.getContent())); //Convert the input stream to a json element
+        JsonObject rootobj = root.getAsJsonObject(); //May be an array, may be an object.
+        String zipcode = rootobj.get("zip_code").getAsString(); //just grab the zipcode
+
+
+        return zipcode;
+    }
+*/
+    public String requestFromApiYahoo()throws IOException{
+
+        //add code date
+
+
+
+        String sURL = "http://query.yahooapis.com/v1/public/yql?q=SELECT%20*%20FROM%20yahoo.finance.historicaldata%20WHERE%20symbol%20=%20%22"
+                + "ARS" +
+                "=X%22%20AND%20startDate%20=%20%22" +
+                "2017-01-01" +
+                "%22%20AND%20endDate%20=%20%22" +
+                "2017-01-02" +
+                "%22&format=json&env=store://datatables.org/alltableswithkeys";
+        //String sURL = "http://query.yahooapis.com/v1/public/yql?q=SELECT%20*%20FROM%20yahoo.finance.historicaldata%20WHERE%20symbol%20=%20%22SEK=X%22%20AND%20startDate%20=%20%222014-10-02%22%20AND%20endDate%20=%20%222014-10-02%22&format=json&env=store://datatables.org/alltableswithkeys"; //just a string
+
+
+
+        // Connect to the URL using java's native library
+        URL url = new URL(sURL);
+        HttpURLConnection request = (HttpURLConnection) url.openConnection();
+        request.connect();
+
+        // Convert to a JSON object to print data
+        JsonParser jp = new JsonParser(); //from gson
+        JsonElement root = jp.parse(new InputStreamReader((InputStream) request.getContent())); //Convert the input stream to a json element
+        JsonObject rootobj = root.getAsJsonObject(); //May be an array, may be an object.
+
+        //object Working !
+       // String zipcode = rootobj.getAsJsonObject("query").getAsJsonObject("results").getAsJsonObject("quote").toString();
+
+
+        //OpenStockValue
+        String zipcode = rootobj.getAsJsonObject("query").getAsJsonObject("results").getAsJsonObject("quote").get("Open").getAsString();
+
+
+
+
+        //[query] -> [results] -> [quote] -> Symbol
+
+        return zipcode;
+    }
+
+    public String requestFromApiYahoo(String code, Integer day,Integer month , Integer year)throws IOException{
+
+        //add code date
+//change to LocalDate
+        Integer dayPlus = day + 1;
+
+        String dateFrom = year.toString()+"-"+month.toString()+"-"+ day.toString();
+        //String dateTo = year.toString()+"-"+month.toString()+"-"+ (day + 1 )
+
+
+        String sURL = "http://query.yahooapis.com/v1/public/yql?q=SELECT%20*%20FROM%20yahoo.finance.historicaldata%20WHERE%20symbol%20=%20%22"
+                + code +
+                "=X%22%20AND%20startDate%20=%20%22" +
+                dateFrom +
+                "%22%20AND%20endDate%20=%20%22" +
+                //dateTo+
+                "%22&format=json&env=store://datatables.org/alltableswithkeys";
+        //String sURL = "http://query.yahooapis.com/v1/public/yql?q=SELECT%20*%20FROM%20yahoo.finance.historicaldata%20WHERE%20symbol%20=%20%22SEK=X%22%20AND%20startDate%20=%20%222014-10-02%22%20AND%20endDate%20=%20%222014-10-02%22&format=json&env=store://datatables.org/alltableswithkeys"; //just a string
+
+
+
+        // Connect to the URL using java's native library
+        URL url = new URL(sURL);
+        HttpURLConnection request = (HttpURLConnection) url.openConnection();
+        request.connect();
+
+        // Convert to a JSON object to print data
+        JsonParser jp = new JsonParser(); //from gson
+        JsonElement root = jp.parse(new InputStreamReader((InputStream) request.getContent())); //Convert the input stream to a json element
+        JsonObject rootobj = root.getAsJsonObject(); //May be an array, may be an object.
+
+        //object Working !
+        // String zipcode = rootobj.getAsJsonObject("query").getAsJsonObject("results").getAsJsonObject("quote").toString();
+
+
+        //OpenStockValue
+        String zipcode = rootobj.getAsJsonObject("query").getAsJsonObject("results").getAsJsonObject("quote").get("Open").getAsString();
+
+
+
+
+        //[query] -> [results] -> [quote] -> Symbol
+
+        return zipcode;
+    }
+
+
+
+
+
+
 
     public Currency() {
     }
