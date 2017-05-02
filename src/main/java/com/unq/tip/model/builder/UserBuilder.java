@@ -14,24 +14,24 @@ public class UserBuilder {
     String currentCurrency = "USD";
 
 
-    public UserBuilder withEmail(String email){
+    public UserBuilder withEmail(String email) {
         this.email = email;
         return this;
     }
 
-    public UserBuilder withGroupSize(int groupSize){
-        this.groupSize =groupSize;
+    public UserBuilder withGroupSize(int groupSize) {
+        this.groupSize = groupSize;
         return this;
     }
 
-    public UserBuilder withCurrentCurrency (String currentCurrency){
+    public UserBuilder withCurrentCurrency(String currentCurrency) {
         this.currentCurrency = currentCurrency;
         return this;
     }
 
 
-    public User build(){
-      return new User(email,groupSize,currentCurrency);
+    public User build() {
+        return new User(email, groupSize, currentCurrency);
     }
 
 }

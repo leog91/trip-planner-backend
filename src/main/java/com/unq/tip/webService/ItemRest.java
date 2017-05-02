@@ -31,10 +31,10 @@ public class ItemRest {
 
     @RequestMapping(value = "/add/{email}/{day}/{month}/{year}/{name}/{amount}/{currency}/{category}/{groupSize}", method = RequestMethod.GET)
     Item addItem(@PathVariable String email, @PathVariable Integer day, @PathVariable Integer month, @PathVariable Integer year, @PathVariable String name,
-                 @PathVariable Integer amount, @PathVariable String currency, @PathVariable String category,@PathVariable Integer groupSize) {
+                 @PathVariable Integer amount, @PathVariable String currency, @PathVariable String category, @PathVariable Integer groupSize) {
 
         LocalDate date = LocalDate.now().withDayOfMonth(day).withMonthOfYear(month).withYear(year);
-       // http://localhost:8080/item/leog91@gmail.com/29/3/2017/baseName/0/ARS/general
+        // http://localhost:8080/item/leog91@gmail.com/29/3/2017/baseName/0/ARS/general
         Item item = new ItemBuilder()
                 .withDate(date)
                 .withCurrency(currency)
@@ -52,46 +52,40 @@ public class ItemRest {
     }
 
 
-
     @RequestMapping(value = "/categories", method = RequestMethod.GET)
     Collection<String> categories() {
-        List<String> c= new ArrayList<String>();
-        c.add("Food");c.add("Transport");c.add("Lodging");
+        List<String> c = new ArrayList<String>();
+        c.add("Food");
+        c.add("Transport");
+        c.add("Lodging");
         return c;
     }
 
 
-
-
     @RequestMapping(value = "/item/{date1}/{date2}", method = RequestMethod.GET)
-    Collection<Item> readBetweenDates(@PathVariable String date1,String date2) {
+    Collection<Item> readBetweenDates(@PathVariable String date1, String date2) {
         LocalDate dateA = new LocalDate().withYear(2009).withMonthOfYear(3).withDayOfMonth(4);
         //LocalDate dateB = new LocalDate().withYear(2010).withMonthOfYear(3).withDayOfMonth(4);
         LocalDate dateB = LocalDate.now();
-        return this.itemRepository.findByDateBetween(dateA,dateB);
+        return this.itemRepository.findByDateBetween(dateA, dateB);
     }
 
 
-
-//
+    //
     //
     @RequestMapping(value = "/item/{date1}/{date2}/{user}", method = RequestMethod.GET)
-    Collection<Item> readBetweenDatesAndUser(@PathVariable String date1,String date2,String user) {
+    Collection<Item> readBetweenDatesAndUser(@PathVariable String date1, String date2, String user) {
         LocalDate dateA = new LocalDate().withYear(2009).withMonthOfYear(3).withDayOfMonth(4);
         //LocalDate dateB = new LocalDate().withYear(2010).withMonthOfYear(3).withDayOfMonth(4);
         LocalDate dateB = LocalDate.now();
-        return this.itemRepository.findByDateBetweenAndUser(dateA,dateB,"user2");
+        return this.itemRepository.findByDateBetweenAndUser(dateA, dateB, "user2");
     }
-
-
-
 
 
     @RequestMapping(value = "/category/{category}", method = RequestMethod.GET)
     Collection<Item> readByCategory(@PathVariable String category) {
         return this.itemRepository.findByCategory(category);
     }
-
 
 
     @RequestMapping(
@@ -108,11 +102,10 @@ public class ItemRest {
     }
 
 
-
     @RequestMapping(
             value = "/user",
             method = RequestMethod.GET)//,
-            //consumes = MediaType.APPLICATION_JSON_VALUE)
+    //consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<?> addUser() {
 
@@ -121,9 +114,6 @@ public class ItemRest {
         itemRepository.save(item1);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
-
-
 
 
     @RequestMapping(value = "/date", method = RequestMethod.GET)

@@ -59,10 +59,10 @@ public class Item {
     }
 
 
-/*
-    @ManyToOne
-    private Price price;
-*/
+    /*
+        @ManyToOne
+        private Price price;
+    */
     public Item() {
     }
 
@@ -78,7 +78,7 @@ public class Item {
     }
 */
 
-    public Item(String name, int ammount, String currency, String category, LocalDate date, String user,int groupSize) {
+    public Item(String name, int ammount, String currency, String category, LocalDate date, String user, int groupSize) {
         this.name = name;
         this.ammount = ammount;
         this.currency = currency;
@@ -105,7 +105,7 @@ public class Item {
         return currency;
     }
 
-  //  public Price getPrice() {return price; }
+    //  public Price getPrice() {return price; }
 
     public void setName(String name) {
         this.name = name;

@@ -78,10 +78,48 @@ public class CurrencyRest {
         Currency currency = new Currency();
 
 
+        //return  currency.requestFromApi();
+        return currency.requestFromApiYahoo();
+    }
+
+    @RequestMapping(value = "/apiy", method = RequestMethod.GET)
+    String apiY() throws IOException {
+
+        Currency currency = new Currency();
+
+        String code = "ARS";
+        LocalDate date = new LocalDate().withYear(2010).withMonthOfYear(10).withDayOfMonth(4);
 
         //return  currency.requestFromApi();
-        return  currency.requestFromApiYahoo();
+        return currency.requestFromApiYahoo(code, date);
     }
+
+    @RequestMapping(value = "/coef/{code}/{day}/{month}/{year}", method = RequestMethod.GET)
+    String coefByCodeAndDate(@PathVariable Integer day, @PathVariable Integer month, @PathVariable Integer year, @PathVariable String code) throws IOException {
+        //ToUSD
+        Currency currency = new Currency();
+
+        LocalDate date = new LocalDate().withYear(year).withMonthOfYear(month).withDayOfMonth(day);
+
+        return currency.requestFromApiYahoo(code, date);
+    }
+
+
+    @RequestMapping(value = "/apitest", method = RequestMethod.GET)
+    String apiTest() {
+
+
+        LocalDate date = LocalDate.now().withYear(2017).withMonthOfYear(1).withDayOfMonth(1);
+
+        String dateFrom = date.getYear() + "-" + date.getMonthOfYear() + "-" + date.getDayOfMonth();
+
+
+        //return  currency.requestFromApi();
+        return date.toString();
+    }
+
+
+
 
 
 

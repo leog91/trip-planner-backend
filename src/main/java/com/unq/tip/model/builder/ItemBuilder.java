@@ -23,40 +23,39 @@ public class ItemBuilder {
     LocalDate date = LocalDate.now();
 
 
-
     public ItemBuilder withName(String name) {
         this.name = name;
         return this;
     }
 
-    public ItemBuilder withGroupSize(int groupSize){
+    public ItemBuilder withGroupSize(int groupSize) {
         this.groupSize = groupSize;
         return this;
-}
+    }
 
 
-    public  ItemBuilder withCurrency(String currency) {
+    public ItemBuilder withCurrency(String currency) {
         this.currency = currency;
         return this;
     }
 
-public     ItemBuilder withCategory(String category) {
+    public ItemBuilder withCategory(String category) {
         this.category = category;
         return this;
     }
 
-    public ItemBuilder withDate(LocalDate date){
+    public ItemBuilder withDate(LocalDate date) {
         this.date = date;
         return this;
     }
 
-    public ItemBuilder withUser(String user){
+    public ItemBuilder withUser(String user) {
         this.user = user;
         return this;
     }
 
     public Item build() {
-        return new Item(name, ammount, currency,category,date,user,groupSize);
+        return new Item(name, ammount, currency, category, date, user, groupSize);
     }
 
 

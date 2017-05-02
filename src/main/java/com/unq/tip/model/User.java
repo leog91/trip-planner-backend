@@ -53,13 +53,14 @@ public class User {
         this.email = email;
     }
 
-    public User(String email,int groupSize, String currentCurrency) {
+    public User(String email, int groupSize, String currentCurrency) {
         this.email = email;
         this.groupSize = groupSize;
         this.currentCurrency = currentCurrency;
     }
 
-    public User(){}
+    public User() {
+    }
 
     //public void addItem(Item item){this.items.add(item);}
 

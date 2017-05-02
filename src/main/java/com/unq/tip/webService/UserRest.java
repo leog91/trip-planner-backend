@@ -36,20 +36,17 @@ public class UserRest {
     }
 
 
-
     @RequestMapping(value = "/logIn/{email}", method = RequestMethod.GET)
     User logIn(@PathVariable String email) {
 
         User user = this.userRepository.findOne(email);
 
-        if (user == null){
+        if (user == null) {
             user = new UserBuilder().withEmail(email).build();
             userRepository.save(user);
         }
         return user;
     }
-
-
 
 
     @RequestMapping(
@@ -75,33 +72,24 @@ public class UserRest {
 
         String user = "email1";
 //userRepository.findByEmail()
-        User user1 =  userRepository.findOne(user);
+        User user1 = userRepository.findOne(user);
 
-        if (user1 == null){
+        if (user1 == null) {
             //check http status
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-
 
 
         Item item1 = new ItemBuilder().withUser(user).build();
         itemRepository.save(item1);
 
 
-
-
-
-
         //findByEmail(user).get(0);
-       // user1.addItem(item1);
+        // user1.addItem(item1);
 
         userRepository.save(user1);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
-
-
-
 
 
 }

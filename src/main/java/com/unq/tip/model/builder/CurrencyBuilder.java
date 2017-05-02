@@ -31,16 +31,14 @@ public class CurrencyBuilder {
         return this;
     }
 
-    public CurrencyBuilder withRatio(int ratio){
+    public CurrencyBuilder withRatio(int ratio) {
         this.ratio = ratio;
         return this;
     }
 
     public Currency build() {
-        return new Currency(codeFrom, codeTo, date,ratio);
+        return new Currency(codeFrom, codeTo, date, ratio);
     }
-
-
 
 
 }

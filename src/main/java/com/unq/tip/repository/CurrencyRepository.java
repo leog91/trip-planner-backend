@@ -21,7 +21,7 @@ public interface CurrencyRepository extends CrudRepository<Currency, Long> {
 
     List<Currency> findByDate(LocalDate date);
 
-    List<Currency> findByDateAndCodeFromAndCodeTo(LocalDate date,String codeFrom, String codeTo);
+    List<Currency> findByDateAndCodeFromAndCodeTo(LocalDate date, String codeFrom, String codeTo);
 
 
 
