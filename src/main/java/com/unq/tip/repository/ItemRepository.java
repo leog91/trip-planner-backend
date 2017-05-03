@@ -22,6 +22,8 @@ public interface ItemRepository extends CrudRepository<Item, Long> {
 
     List<Item> findByDateBetween(LocalDate date1, LocalDate date2);
 
+    List<Item> findByUser(String user);
+
     // List<Item> findByDate(Date date);
 
     //ck

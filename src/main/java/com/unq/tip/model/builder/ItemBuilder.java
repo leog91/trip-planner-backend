@@ -12,11 +12,11 @@ import org.joda.time.LocalDate;
 public class ItemBuilder {
 
     String name = "bassename";
-    int ammount = 0;
+    int amount = 0;
     String currency = "";
     String category = "";
     String user = "";
-    int groupSize = 0;
+    int groupSize = 1;
 
     //LocalDateTime date = LocalDate.now().atStartOfDay();
 
@@ -54,8 +54,13 @@ public class ItemBuilder {
         return this;
     }
 
+    public ItemBuilder withAmount(int amount) {
+        this.amount = amount;
+        return this;
+    }
+
     public Item build() {
-        return new Item(name, ammount, currency, category, date, user, groupSize);
+        return new Item(name, amount, currency, category, date, user, groupSize);
     }
 
 
