@@ -31,11 +31,45 @@ public class UserRest {
 
 
     @RequestMapping(value = "/read/{email}", method = RequestMethod.GET)
-    Collection<User> readItems(@PathVariable String email) {
-        return this.userRepository.findByEmail(email);
+    User readItems(@PathVariable String email) {
+        return this.userRepository.findOne(email);
     }
 
 
+    @RequestMapping(value = "/logIn/{email}", method = RequestMethod.GET)
+    public ResponseEntity<?> logIn(@PathVariable String email) {
+
+        User user = this.userRepository.findOne(email);
+
+        if (user == null) {
+            user = new UserBuilder().withEmail(email).build();
+            userRepository.save(user);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/saveSettings/{email}/{code}/{groupSize}", method = RequestMethod.GET)
+    public ResponseEntity<?> saveSettings(@PathVariable String email,@PathVariable String code,@PathVariable int groupSize) {
+
+        User user = this.userRepository.findOne(email);
+
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        user.setGroupSize(groupSize);
+        user.setCurrentCurrency(code);
+
+        this.userRepository.save(user);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
+
+
+
+/*
     @RequestMapping(value = "/logIn/{email}", method = RequestMethod.GET)
     User logIn(@PathVariable String email) {
 
@@ -46,6 +80,15 @@ public class UserRest {
             userRepository.save(user);
         }
         return user;
+    }
+*/
+
+
+    @RequestMapping(value = "/test/{email}", method = RequestMethod.GET)
+    String testt(@PathVariable String email) {
+
+
+        return email;
     }
 
 
