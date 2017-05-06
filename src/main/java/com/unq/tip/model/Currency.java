@@ -37,6 +37,54 @@ public class Currency {
 
     private int ratio;
 
+
+    /**
+     * Stock market is closed on weekends
+     */
+    public LocalDate checkDate(LocalDate date) {
+
+        LocalDate checked = date;
+
+        if (date.getDayOfWeek() == 6) {
+            checked = date.minusDays(1);
+        }
+        if (date.getDayOfWeek() == 7) {
+            checked = date.plusDays(1);
+        }
+
+        return checked;
+    }
+
+
+    public String requestFromApiYahoo(String code, LocalDate date) throws IOException {
+
+        String checkedDate = checkDate(date).toString();
+
+        String sURL = "http://query.yahooapis.com/v1/public/yql?q=SELECT%20*%20FROM%20yahoo.finance.historicaldata%20WHERE%20symbol%20=%20%22"
+                + code +
+                "=X%22%20AND%20startDate%20=%20%22" +
+                checkedDate +
+                "%22%20AND%20endDate%20=%20%22" +
+                checkedDate +
+                "%22&format=json&env=store://datatables.org/alltableswithkeys";
+
+        //String sURL = "http://query.yahooapis.com/v1/public/yql?q=SELECT%20*%20FROM%20yahoo.finance.historicaldata%20WHERE%20symbol%20=%20%22SEK=X%22%20AND%20startDate%20=%20%222014-10-02%22%20AND%20endDate%20=%20%222014-10-02%22&format=json&env=store://datatables.org/alltableswithkeys";
+
+        //java's native library
+        URL url = new URL(sURL);
+        HttpURLConnection request = (HttpURLConnection) url.openConnection();
+        request.connect();
+
+        JsonParser jp = new JsonParser(); //from gson
+        JsonElement root = jp.parse(new InputStreamReader((InputStream) request.getContent())); //Convert the input stream to a json element
+        JsonObject rootobj = root.getAsJsonObject(); //May be an array, may be an object.
+
+        String openStockValue = rootobj.getAsJsonObject("query").getAsJsonObject("results").getAsJsonObject("quote").get("Open").getAsString();
+
+        return openStockValue;
+    }
+
+
     public int getRatio() {
         return ratio;
     }
@@ -74,113 +122,6 @@ public class Currency {
         this.codeTo = codeTo;
         this.date = date;
         this.ratio = ratio;
-    }
-
-    /*
-        public String requestFromApi()throws IOException{
-
-
-            String sURL = "http://freegeoip.net/json/"; //just a string
-
-            // Connect to the URL using java's native library
-            URL url = new URL(sURL);
-            HttpURLConnection request = (HttpURLConnection) url.openConnection();
-            request.connect();
-
-            // Convert to a JSON object to print data
-            JsonParser jp = new JsonParser(); //from gson
-            JsonElement root = jp.parse(new InputStreamReader((InputStream) request.getContent())); //Convert the input stream to a json element
-            JsonObject rootobj = root.getAsJsonObject(); //May be an array, may be an object.
-            String zipcode = rootobj.get("zip_code").getAsString(); //just grab the zipcode
-
-
-            return zipcode;
-        }
-    */
-    public String requestFromApiYahoo() throws IOException {
-
-        //add code date
-
-
-        String sURL = "http://query.yahooapis.com/v1/public/yql?q=SELECT%20*%20FROM%20yahoo.finance.historicaldata%20WHERE%20symbol%20=%20%22"
-                + "ARS" +
-                "=X%22%20AND%20startDate%20=%20%22" +
-                "2012-01-01" +
-                "%22%20AND%20endDate%20=%20%22" +
-                "2012-01-02" +
-                "%22&format=json&env=store://datatables.org/alltableswithkeys";
-        //String sURL = "http://query.yahooapis.com/v1/public/yql?q=SELECT%20*%20FROM%20yahoo.finance.historicaldata%20WHERE%20symbol%20=%20%22SEK=X%22%20AND%20startDate%20=%20%222014-10-02%22%20AND%20endDate%20=%20%222014-10-02%22&format=json&env=store://datatables.org/alltableswithkeys"; //just a string
-
-
-        // Connect to the URL using java's native library
-        URL url = new URL(sURL);
-        HttpURLConnection request = (HttpURLConnection) url.openConnection();
-        request.connect();
-
-        // Convert to a JSON object to print data
-        JsonParser jp = new JsonParser(); //from gson
-        JsonElement root = jp.parse(new InputStreamReader((InputStream) request.getContent())); //Convert the input stream to a json element
-        JsonObject rootobj = root.getAsJsonObject(); //May be an array, may be an object.
-
-        //object Working !
-        // String zipcode = rootobj.getAsJsonObject("query").getAsJsonObject("results").getAsJsonObject("quote").toString();
-
-
-        //OpenStockValue
-        String zipcode = rootobj.getAsJsonObject("query").getAsJsonObject("results").getAsJsonObject("quote").get("Open").getAsString();
-
-
-        //[query] -> [results] -> [quote] -> Symbol
-
-        return zipcode;
-    }
-
-    public String requestFromApiYahoo(String code, LocalDate date) throws IOException {
-
-
-        //LocalDate date = LocalDate.now().withYear(2017).withMonthOfYear(1).withDayOfMonth(1);
-//!!!! stock weekend values are down, 'cose  there s not activity ??
-// date.getDayOfWeek() == weekend() saturday -> friday || sunday -> monday
-
-        LocalDate datePlusOne = date.plusDays(1);
-
-
-        String dateFrom = date.toString();
-
-        String datePlus = datePlusOne.toString();
-
-        String sURL = "http://query.yahooapis.com/v1/public/yql?q=SELECT%20*%20FROM%20yahoo.finance.historicaldata%20WHERE%20symbol%20=%20%22"
-                + code +
-                // + "ARS" +
-                "=X%22%20AND%20startDate%20=%20%22" +
-                dateFrom +
-                "%22%20AND%20endDate%20=%20%22" +
-                datePlus +
-                "%22&format=json&env=store://datatables.org/alltableswithkeys";
-        //String sURL = "http://query.yahooapis.com/v1/public/yql?q=SELECT%20*%20FROM%20yahoo.finance.historicaldata%20WHERE%20symbol%20=%20%22SEK=X%22%20AND%20startDate%20=%20%222014-10-02%22%20AND%20endDate%20=%20%222014-10-02%22&format=json&env=store://datatables.org/alltableswithkeys"; //just a string
-
-
-        // Connect to the URL using java's native library
-        URL url = new URL(sURL);
-        HttpURLConnection request = (HttpURLConnection) url.openConnection();
-        request.connect();
-
-        // Convert to a JSON object to print data
-        JsonParser jp = new JsonParser(); //from gson
-        JsonElement root = jp.parse(new InputStreamReader((InputStream) request.getContent())); //Convert the input stream to a json element
-        JsonObject rootobj = root.getAsJsonObject(); //May be an array, may be an object.
-
-        //object Working !
-        // String zipcode = rootobj.getAsJsonObject("query").getAsJsonObject("results").getAsJsonObject("quote").toString();
-
-
-        //OpenStockValue
-        String zipcode = rootobj.getAsJsonObject("query").getAsJsonObject("results").getAsJsonObject("quote").get("Open").getAsString();
-
-
-        //[query] -> [results] -> [quote] -> Symbol
-
-        return zipcode;
     }
 
 

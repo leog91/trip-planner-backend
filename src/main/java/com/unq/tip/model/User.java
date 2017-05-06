@@ -35,16 +35,6 @@ public class User {
         this.groupSize = groupSize;
     }
 
-/*
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-*/
-
-   /* @OneToMany()
-    private Set<Item> items = new HashSet<>();
-*/
-
     public String getEmail() {
         return email;
     }
@@ -61,8 +51,6 @@ public class User {
 
     public User() {
     }
-
-    //public void addItem(Item item){this.items.add(item);}
 
 
 }

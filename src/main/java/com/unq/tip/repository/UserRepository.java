@@ -12,8 +12,6 @@ import java.util.List;
 
 @RepositoryRestResource
 public interface UserRepository extends CrudRepository<User, String> {
-
-    List<User> findByEmail(String email);
-
+    
 
 }

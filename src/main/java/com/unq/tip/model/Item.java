@@ -33,20 +33,6 @@ public class Item {
 
     private int groupSize;
 
-
-    /*
-    public LocalDateTime getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDateTime date) {
-        this.date = date;
-    }
-
-    private LocalDateTime date;
-
-*/
-
     //@Type(type="org.joda.time.contrib.hibernate.PersistentDateTime")
     private LocalDate date;
 
@@ -59,24 +45,9 @@ public class Item {
     }
 
 
-    /*
-        @ManyToOne
-        private Price price;
-    */
     public Item() {
     }
 
-
-/*
-    public Item(String name, int ammount, Price price, String currency, String category, LocalDate date) {
-        this.name = name;
-        this.ammount = ammount;
-        this.price = price;
-        this.currency = currency;
-        this.category = category;
-        this.date = date;
-    }
-*/
 
     public Item(String name, int ammount, String currency, String category, LocalDate date, String user, int groupSize) {
         this.name = name;
@@ -105,8 +76,6 @@ public class Item {
         return currency;
     }
 
-    //  public Price getPrice() {return price; }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -114,8 +83,6 @@ public class Item {
     public void setCurrency(String currency) {
         this.currency = currency;
     }
-
-    //public void setPrice(Price price) {this.price = price;}
 
     public int getAmmount() {
         return ammount;

@@ -1,8 +1,6 @@
 package com.unq.tip.model.builder;
 
 import com.unq.tip.model.Item;
-import com.unq.tip.model.Price;
-import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
 
@@ -17,9 +15,6 @@ public class ItemBuilder {
     String category = "";
     String user = "";
     int groupSize = 1;
-
-    //LocalDateTime date = LocalDate.now().atStartOfDay();
-
     LocalDate date = LocalDate.now();
 
 
