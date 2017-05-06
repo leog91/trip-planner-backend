@@ -40,6 +40,7 @@ public class ItemRest {
                 .withUser(email)
                 .withName(name)
                 .withAmount(amount)
+                .withCategory(category)
                 .withGroupSize(groupSize)
                 .build();
         return this.itemRepository.save(item);
@@ -73,6 +74,11 @@ public class ItemRest {
     @RequestMapping(value = "/category/{category}", method = RequestMethod.GET)
     Collection<Item> readByCategory(@PathVariable String category) {
         return this.itemRepository.findByCategory(category);
+    }
+
+    @RequestMapping(value = "/categoryuser/{userEmail}/{category}", method = RequestMethod.GET)
+    Collection<Item> readByCategoryAndUser(@PathVariable String userEmail,@PathVariable String category) {
+        return this.itemRepository.findByCategoryAndUser(category,userEmail);
     }
 
 

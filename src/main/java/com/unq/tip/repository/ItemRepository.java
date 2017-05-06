@@ -20,6 +20,8 @@ public interface ItemRepository extends CrudRepository<Item, Long> {
 
     List<Item> findByCategory(String category);
 
+    List<Item> findByCategoryAndUser(String category, String user);
+
     List<Item> findByDateBetween(LocalDate date1, LocalDate date2);
 
     List<Item> findByUser(String user);
