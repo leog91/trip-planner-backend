@@ -59,6 +59,20 @@ public class ItemRest {
         return this.itemRepository.findByUser(userEmail);
     }
 
+
+    //consider flag like is valid
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+    public ResponseEntity<?> deleteById(@PathVariable Long id) {
+
+
+        this.itemRepository.delete(id);
+
+        //this.itemRepository.findOne(id); update
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
     @RequestMapping(value = "/betweendates/{userEmail}/{dayFrom}/{monthFrom}/{yearFrom}/{dayTo}/{monthTo}/{yearTo}", method = RequestMethod.GET)
     Collection<Item> betweenDates(@PathVariable String userEmail, @PathVariable Integer dayFrom, @PathVariable Integer monthFrom, @PathVariable Integer yearFrom,
                                   @PathVariable Integer dayTo, @PathVariable Integer monthTo, @PathVariable Integer yearTo) {
@@ -77,8 +91,8 @@ public class ItemRest {
     }
 
     @RequestMapping(value = "/categoryuser/{userEmail}/{category}", method = RequestMethod.GET)
-    Collection<Item> readByCategoryAndUser(@PathVariable String userEmail,@PathVariable String category) {
-        return this.itemRepository.findByCategoryAndUser(category,userEmail);
+    Collection<Item> readByCategoryAndUser(@PathVariable String userEmail, @PathVariable String category) {
+        return this.itemRepository.findByCategoryAndUser(category, userEmail);
     }
 
 
