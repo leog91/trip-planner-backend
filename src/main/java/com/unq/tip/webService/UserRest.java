@@ -13,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * Created by Leonardo on 16/4/2017.
@@ -49,8 +51,49 @@ public class UserRest {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+
+    @RequestMapping(value = "/addCategory/{email}/{category}", method = RequestMethod.GET)
+    public ResponseEntity<?> addCategory(@PathVariable String email, @PathVariable String category) {
+
+        User user = this.userRepository.findOne(email);
+
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        user.addCategory(category);
+        this.userRepository.save(user);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/removeCategory/{email}/{category}", method = RequestMethod.GET)
+    public ResponseEntity<?> removeCategory(@PathVariable String email, @PathVariable String category) {
+
+        User user = this.userRepository.findOne(email);
+
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        //
+
+/*
+        ItemRest itemRest = new ItemRest();
+        Collection<Item> items = itemRest.readByCategoryAndUser(email,category);
+
+        Stream<Item> generalItems = items.stream().map(item -> item.toGeneralCategory());
+        generalItems.map(item -> itemRepository.save(item));
+*/
+
+
+        user.removeCategory(category);
+        this.userRepository.save(user);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
     @RequestMapping(value = "/saveSettings/{email}/{code}/{groupSize}", method = RequestMethod.GET)
-    public ResponseEntity<?> saveSettings(@PathVariable String email,@PathVariable String code,@PathVariable int groupSize) {
+    public ResponseEntity<?> saveSettings(@PathVariable String email, @PathVariable String code, @PathVariable int groupSize) {
 
         User user = this.userRepository.findOne(email);
 

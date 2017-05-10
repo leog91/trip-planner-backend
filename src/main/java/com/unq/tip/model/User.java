@@ -2,6 +2,7 @@ package com.unq.tip.model;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -18,6 +19,25 @@ public class User {
     private int groupSize;
 
     private String currentCurrency;
+
+    @ElementCollection
+    private Set<String> categories = new HashSet<>();
+
+    public Set<String> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Set<String> categories) {
+        this.categories = categories;
+    }
+
+    public void addCategory(String category){
+        this.categories.add(category);
+    }
+
+    public void removeCategory(String category){
+        this.categories.remove(category);
+    }
 
     public String getCurrentCurrency() {
         return currentCurrency;

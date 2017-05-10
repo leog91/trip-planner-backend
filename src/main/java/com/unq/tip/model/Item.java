@@ -76,6 +76,11 @@ public class Item {
     }
 
 
+    public Item toGeneralCategory(){
+        this.category = "General";
+        return this;
+    }
+
     public String getName() {
         return name;
     }

@@ -126,6 +126,38 @@ public class ItemRest {
         return this.itemRepository.findByName("Fideos");
     }
 
+
+
+    @RequestMapping(value = "/inib", method = RequestMethod.GET)
+    Collection<Item> initb() {
+
+        LocalDate date = new LocalDate().withYear(2016).withMonthOfYear(5).withDayOfMonth(2);
+
+
+        Item item1 = new ItemBuilder().withDate(date).withName("Fideos").withCategory("abs").withUser("leog91").withCurrency("ARS").withAmount(15).build();
+        itemRepository.save(item1);
+        Item item2 = new ItemBuilder().withDate(date).withName("Agua caliente").withUser("leog91").withCategory("abs").withCurrency("ARS").withAmount(1).build();
+        itemRepository.save(item2);
+        Item item3 = new ItemBuilder().withDate(date).withName("Cafe").withUser("leog91").withCategory("Food").withCurrency("ARS").withAmount(10).build();
+        itemRepository.save(item3);
+        Item item4 = new ItemBuilder().withDate(date).withName("Fernet").withUser("leog91").withCategory("Food").withCurrency("ARS").withAmount(30).build();
+        itemRepository.save(item4);
+        Item item5 = new ItemBuilder().withDate(date).withName("Colectivo").withUser("leog91").withCategory("Food").withCurrency("ARS").withAmount(6).build();
+        itemRepository.save(item5);
+        Item item6 = new ItemBuilder().withDate(date).withName("Termo").withUser("leog91").withCategory("General").withCurrency("ARS").withAmount(100).build();
+        itemRepository.save(item6);
+        Item item7 = new ItemBuilder().withDate(date.plusDays(1)).withName("Chicles").withUser("leog91").withCategory("General").withCurrency("ARS").withAmount(5).build();
+        itemRepository.save(item7);
+        Item item8 = new ItemBuilder().withDate(date.plusDays(2)).withName("Papel").withUser("leog91").withCategory("General").withCurrency("ARS").withAmount(6).build();
+        itemRepository.save(item8);
+        Item item9 = new ItemBuilder().withDate(date.plusDays(5)).withName("3 Bananas").withUser("leog91").withCategory("General").withCurrency("ARS").withAmount(10).build();
+        itemRepository.save(item9);
+        Item item10 = new ItemBuilder().withDate(date.plusDays(7)).withName("Libro").withUser("leog91").withCategory("General").withCurrency("ARS").withAmount(76).build();
+        itemRepository.save(item10);
+
+        return this.itemRepository.findByName("Fideos");
+    }
+
     @RequestMapping(value = "/categories", method = RequestMethod.GET)
     Collection<String> categories() {
         List<String> c = new ArrayList<String>();
