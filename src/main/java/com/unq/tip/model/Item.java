@@ -32,7 +32,7 @@ public class Item {
     private long id;
 
     private String name;
-    private int ammount;
+    private Float ammount;
     private String currency;
 
     public String getUser() {
@@ -65,7 +65,7 @@ public class Item {
     }
 
 
-    public Item(String name, int ammount, String currency, String category, LocalDate date, String user, int groupSize) {
+    public Item(String name, Float ammount, String currency, String category, LocalDate date, String user, int groupSize) {
         this.name = name;
         this.ammount = ammount;
         this.currency = currency;
@@ -105,11 +105,11 @@ public class Item {
         this.currency = currency;
     }
 
-    public int getAmmount() {
+    public Float getAmmount() {
         return ammount;
     }
 
-    public void setAmmount(int ammount) {
+    public void setAmmount(Float ammount) {
         this.ammount = ammount;
     }
 

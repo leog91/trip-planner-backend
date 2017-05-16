@@ -4,8 +4,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.joda.time.LocalDate;
-import org.joda.time.LocalDateTime;
-import sun.awt.Symbol;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -35,7 +33,7 @@ public class Currency {
 
     private LocalDate date;
 
-    private int ratio;
+    private Float ratio;
 
 
     /**
@@ -85,11 +83,11 @@ public class Currency {
     }
 
 
-    public int getRatio() {
+    public Float getRatio() {
         return ratio;
     }
 
-    public void setRatio(int ratio) {
+    public void setRatio(Float ratio) {
         this.ratio = ratio;
     }
 
@@ -117,7 +115,7 @@ public class Currency {
         this.date = date;
     }
 
-    public Currency(String codeFrom, String codeTo, LocalDate date, int ratio) {
+    public Currency(String codeFrom, String codeTo, LocalDate date, Float ratio) {
         this.codeFrom = codeFrom;
         this.codeTo = codeTo;
         this.date = date;

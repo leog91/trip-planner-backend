@@ -14,7 +14,7 @@ public class CurrencyBuilder {
 
     private LocalDate date;
 
-    private int ratio;
+    private Float ratio;
 
     public CurrencyBuilder withDate(LocalDate date) {
         this.date = date;
@@ -31,7 +31,7 @@ public class CurrencyBuilder {
         return this;
     }
 
-    public CurrencyBuilder withRatio(int ratio) {
+    public CurrencyBuilder withRatio(Float ratio) {
         this.ratio = ratio;
         return this;
     }

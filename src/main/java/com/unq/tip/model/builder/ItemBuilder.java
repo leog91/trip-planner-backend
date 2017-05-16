@@ -10,7 +10,7 @@ import org.joda.time.LocalDate;
 public class ItemBuilder {
 
     String name = "bassename";
-    int amount = 0;
+    float amount = 0;
     String currency = "";
     String category = "";
     String user = "";
@@ -49,7 +49,7 @@ public class ItemBuilder {
         return this;
     }
 
-    public ItemBuilder withAmount(int amount) {
+    public ItemBuilder withAmount(float amount) {
         this.amount = amount;
         return this;
     }

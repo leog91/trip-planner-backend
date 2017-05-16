@@ -104,7 +104,7 @@ public class CurrencyRest {
 
 
     @RequestMapping(value = "/add/{day}/{month}/{year}/{codeFrom}/{codeTo}/{ratio}", method = RequestMethod.GET)
-    Currency addRatio(@PathVariable Integer day, @PathVariable Integer month, @PathVariable Integer year, @PathVariable String codeFrom, @PathVariable String codeTo, @PathVariable Integer ratio) {
+    Currency addRatio(@PathVariable Integer day, @PathVariable Integer month, @PathVariable Integer year, @PathVariable String codeFrom, @PathVariable String codeTo, @PathVariable Float ratio) {
 
         LocalDate date = LocalDate.now().withDayOfMonth(day).withMonthOfYear(month).withYear(year);
 
@@ -122,6 +122,8 @@ public class CurrencyRest {
     Currency load() {
         LocalDate date = LocalDate.now().withDayOfMonth(1).withMonthOfYear(4).withYear(2017);
 
+        float ratio = 3;
+
         int i;
         for (i = 1; i < 14; i++) {
 
@@ -129,7 +131,7 @@ public class CurrencyRest {
                     .withDate(date.plusDays(i))
                     .withCodeFrom("USD")
                     .withCodeTo("ARS")
-                    .withRatio(15)
+                    .withRatio(ratio)
                     .build();
 
             this.currencyRepository.save(currency);
@@ -140,7 +142,8 @@ public class CurrencyRest {
                 .withDate(date)
                 .withCodeFrom("USD")
                 .withCodeTo("ARS")
-                .withRatio(15)
+                .withCodeTo("ARS")
+                .withRatio(ratio)
                 .build();
         return this.currencyRepository.save(currency);
     }

@@ -31,7 +31,7 @@ public class ItemRest {
 
     @RequestMapping(value = "/add/{email}/{day}/{month}/{year}/{name}/{amount}/{currency}/{category}/{groupSize}", method = RequestMethod.GET)
     Item addItem(@PathVariable String email, @PathVariable Integer day, @PathVariable Integer month, @PathVariable Integer year, @PathVariable String name,
-                 @PathVariable Integer amount, @PathVariable String currency, @PathVariable String category, @PathVariable Integer groupSize) {
+                 @PathVariable Float amount, @PathVariable String currency, @PathVariable String category, @PathVariable Integer groupSize) {
 
         LocalDate date = LocalDate.now().withDayOfMonth(day).withMonthOfYear(month).withYear(year);
         Item item = new ItemBuilder()

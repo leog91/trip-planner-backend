@@ -75,6 +75,14 @@ public class UserRest {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         //
+        ItemRest itemRest = new ItemRest();
+        Collection<Item> items = itemRest.readByCategoryAndUser(email,category);
+
+//        for (Item i: items) {
+  //          i.toGeneralCategory();
+//2.2            itemRepository.save(i);
+    //    }
+
 
 /*
         ItemRest itemRest = new ItemRest();
