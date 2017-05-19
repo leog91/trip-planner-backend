@@ -46,6 +46,28 @@ public class ItemRest {
         return this.itemRepository.save(item);
     }
 
+    @RequestMapping(value = "/update/{id}/{email}/{day}/{month}/{year}/{name}/{amount}/{currency}/{category}/{groupSize}", method = RequestMethod.GET)
+    Item updateItem(@PathVariable Long id, @PathVariable String email, @PathVariable Integer day, @PathVariable Integer month, @PathVariable Integer year, @PathVariable String name,
+                 @PathVariable Float amount, @PathVariable String currency, @PathVariable String category, @PathVariable Integer groupSize) {
+
+        LocalDate date = LocalDate.now().withDayOfMonth(day).withMonthOfYear(month).withYear(year);
+
+
+        Item item = this.itemRepository.findOne(id);
+        //item.setUser(email);
+        item.setDate(date);
+        item.setName(name);
+        item.setAmmount(amount);
+        //item.setCurrency(currency);
+        item.setCategory(category);
+        //item.setGroupSize(groupSize);
+
+        
+
+        return this.itemRepository.save(item);
+    }
+
+
 
     @RequestMapping(value = "/item/{name}", method = RequestMethod.GET)
     Collection<Item> readItems(@PathVariable String name) {
@@ -57,6 +79,11 @@ public class ItemRest {
     Collection<Item> findByUser(@PathVariable String userEmail) {
 
         return this.itemRepository.findByUser(userEmail);
+    }
+
+    @RequestMapping(value = "/readId/{id}", method = RequestMethod.GET)
+    public Item findById(@PathVariable Long id) {
+        return this.itemRepository.findOne(id);
     }
 
 
