@@ -62,7 +62,7 @@ public class ItemRest {
         item.setCategory(category);
         //item.setGroupSize(groupSize);
 
-        
+
 
         return this.itemRepository.save(item);
     }
