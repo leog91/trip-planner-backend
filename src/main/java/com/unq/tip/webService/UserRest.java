@@ -31,6 +31,8 @@ public class UserRest {
     @Autowired
     private ItemRepository itemRepository;
 
+    @Autowired
+    private ItemRest itemRest = new ItemRest();
 
     @RequestMapping(value = "/read/{email}", method = RequestMethod.GET)
     User readItems(@PathVariable String email) {
@@ -74,14 +76,24 @@ public class UserRest {
         if (user == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        //
-        ItemRest itemRest = new ItemRest();
-        Collection<Item> items = itemRest.readByCategoryAndUser(email,category);
 
-//        for (Item i: items) {
-  //          i.toGeneralCategory();
-//2.2            itemRepository.save(i);
-    //    }
+
+/*
+        //no except-
+        Collection<Item> items = itemRest.readByCategoryAndUser(email,category);
+        items.stream().map(item -> item.toGeneralCategory());
+        itemRepository.save(items);
+        //
+*/
+
+
+        //
+       Collection<Item> items = itemRest.readByCategoryAndUser(email,category);
+
+        for (Item i: items) {
+            i.toGeneralCategory();
+            itemRepository.save(i);
+        }
 
 
 /*
