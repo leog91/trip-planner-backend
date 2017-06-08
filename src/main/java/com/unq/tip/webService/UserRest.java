@@ -112,7 +112,7 @@ public class UserRest {
     }
 
 
-    @RequestMapping(value = "/saveSettings/{email}/{code}/{groupSize}", method = RequestMethod.GET)
+    @RequestMapping(value = "/saveSettings/{email}/{code}/{groupSize}", method = RequestMethod.POST)
     public ResponseEntity<?> saveSettings(@PathVariable String email, @PathVariable String code, @PathVariable int groupSize) {
 
         User user = this.userRepository.findOne(email);

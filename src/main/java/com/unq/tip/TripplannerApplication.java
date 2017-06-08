@@ -21,9 +21,14 @@ public class TripplannerApplication {
 	@Bean
 	public WebMvcConfigurer corsConfigurer() {
 		return new WebMvcConfigurerAdapter() {
-			@Override
+			/*@Override
 			public void addCorsMappings(CorsRegistry registry) {
 				registry.addMapping("/greeting-javaconfig").allowedOrigins("http://localhost:9000");
+			}*/
+
+			@Override
+			public void addCorsMappings(CorsRegistry registry) {
+				registry.addMapping("/**");
 			}
 		};
 	}

@@ -2,6 +2,7 @@ package com.unq.tip.webService;
 
 import com.unq.tip.model.Item;
 import com.unq.tip.model.builder.ItemBuilder;
+import com.unq.tip.repository.CurrencyRepository;
 import com.unq.tip.repository.ItemRepository;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
@@ -11,6 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -27,6 +29,13 @@ public class ItemRest {
 
     @Autowired
     private ItemRepository itemRepository;
+
+    @Autowired
+    private CurrencyRepository currencyRepository;
+
+    @Autowired
+    private CurrencyRest currencyRest;
+
 
 
     @RequestMapping(value = "/add/{email}/{day}/{month}/{year}/{name}/{amount}/{currency}/{category}/{groupSize}", method = RequestMethod.GET)
@@ -69,6 +78,36 @@ public class ItemRest {
 
 
 
+
+
+
+
+
+    Float sumItems(String currency, Collection<Item> items) throws IOException{
+
+        Float res = new Float(0);
+
+        for (Item i: items) {
+
+
+            Float iAmount = i.getAmmount();
+            /*
+            String iCurrency = i.getCurrency();
+            LocalDate iDate = i.getDate();
+
+            String sValue = currencyRest.coefByCodeAndDate(iDate.getDayOfMonth(), iDate.getDayOfMonth(), iDate.getYear(), iCurrency);
+
+            Float value =Float.parseFloat(sValue);
+
+           res = res + value*iAmount;
+*/
+            res = res + iAmount;
+        }
+
+        return res;
+    }
+
+
     @RequestMapping(value = "/item/{name}", method = RequestMethod.GET)
     Collection<Item> readItems(@PathVariable String name) {
         return this.itemRepository.findByName(name);
@@ -80,6 +119,16 @@ public class ItemRest {
 
         return this.itemRepository.findByUser(userEmail);
     }
+
+    @RequestMapping(value = "/userSum/{userEmail}/{currency}", method = RequestMethod.GET)
+    Float findByUserSum(@PathVariable String userEmail,@PathVariable String currency) throws IOException {
+
+        return this.sumItems(currency,this.itemRepository.findByUser(userEmail));
+
+    }
+
+
+
 
     @RequestMapping(value = "/readId/{id}", method = RequestMethod.GET)
     public Item findById(@PathVariable Long id) {
