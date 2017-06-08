@@ -30,7 +30,44 @@ public class CurrencyRest {
 
 
 
-//checkSelf
+//calc
+    @RequestMapping(value = "/coef/{code}/{day}/{month}/{year}", method = RequestMethod.GET)
+    String coefByCodeAndDate(@PathVariable Integer day, @PathVariable Integer month, @PathVariable Integer year, @PathVariable String code) throws IOException {
+        //ToUSD
+        Currency currency = new Currency();
+
+        LocalDate date = new LocalDate().withYear(year).withMonthOfYear(month).withDayOfMonth(day);
+
+        Currency res = currencyRepository.findByDateAndCodeFromAndCodeTo(date,"USD",code);
+
+        String coef;
+
+
+        if ( res == null){
+
+            coef =currency.requestFromApiYahoo(code, date);
+
+            CurrencyBuilder currencyBuilder =new CurrencyBuilder();
+            Currency currencyb = currencyBuilder
+                    .withDate(date)
+                    .withCodeTo(code)
+                    .withCodeFrom("USD")
+                    .withRatio(Float.parseFloat(coef))
+                    .build();
+
+            currencyRepository.save(currencyb);
+        }
+        else {
+            coef = res.getRatio().toString();
+        }
+
+        return coef;
+    }
+
+
+    /*
+
+    //old
     @RequestMapping(value = "/coef/{code}/{day}/{month}/{year}", method = RequestMethod.GET)
     String coefByCodeAndDate(@PathVariable Integer day, @PathVariable Integer month, @PathVariable Integer year, @PathVariable String code) throws IOException {
         //ToUSD
@@ -40,6 +77,8 @@ public class CurrencyRest {
 
         return currency.requestFromApiYahoo(code, date);
     }
+
+     */
 
 
 
