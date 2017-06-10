@@ -8,6 +8,8 @@ import com.unq.tip.repository.ItemRepository;
 import com.unq.tip.repository.TripRepository;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -57,6 +59,14 @@ public class TripRest {
     }
 
 
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+    public ResponseEntity<?> deleteById(@PathVariable Long id) {
+
+
+        this.tripRepository.delete(id);
+        
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
 
 
