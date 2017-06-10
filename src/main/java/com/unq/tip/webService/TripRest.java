@@ -64,7 +64,7 @@ public class TripRest {
 
 
         this.tripRepository.delete(id);
-        
+
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

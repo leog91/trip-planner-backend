@@ -160,16 +160,34 @@ public class ItemRest {
         return this.itemRepository.findByDateBetweenAndUser(dateFrom, dateTo, userEmail);
     }
 
+    @RequestMapping(value = "/betweendatesSum/{userEmail}/{dayFrom}/{monthFrom}/{yearFrom}/{dayTo}/{monthTo}/{yearTo}/{currency}", method = RequestMethod.GET)
+    Float betweenDatesSum(@PathVariable String userEmail, @PathVariable Integer dayFrom, @PathVariable Integer monthFrom, @PathVariable Integer yearFrom,
+                                  @PathVariable Integer dayTo, @PathVariable Integer monthTo, @PathVariable Integer yearTo , @PathVariable String currency) throws IOException {
+
+        LocalDate dateFrom = LocalDate.now().withDayOfMonth(dayFrom).withMonthOfYear(monthFrom).withYear(yearFrom);
+        LocalDate dateTo = LocalDate.now().withDayOfMonth(dayTo).withMonthOfYear(monthTo).withYear(yearTo);
+
+        return this.sumItems(currency,this.itemRepository.findByDateBetweenAndUser(dateFrom, dateTo, userEmail));
+    }
 
     @RequestMapping(value = "/category/{category}", method = RequestMethod.GET)
     Collection<Item> readByCategory(@PathVariable String category) {
         return this.itemRepository.findByCategory(category);
     }
 
+
+
     @RequestMapping(value = "/categoryuser/{userEmail}/{category}", method = RequestMethod.GET)
     Collection<Item> readByCategoryAndUser(@PathVariable String userEmail, @PathVariable String category) {
         return this.itemRepository.findByCategoryAndUser(category, userEmail);
     }
+
+    @RequestMapping(value = "/categoryuserSum/{userEmail}/{category}/{currency}", method = RequestMethod.GET)
+    Float readByCategoryAndUserSum(@PathVariable String userEmail, @PathVariable String category, @PathVariable String currency) throws IOException {
+
+        return this.sumItems(currency,this.itemRepository.findByCategoryAndUser(category, userEmail));
+    }
+
 
 
     @RequestMapping(value = "/init", method = RequestMethod.GET)
