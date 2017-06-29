@@ -54,6 +54,44 @@ public class Currency {
     }
 
 
+    public String fakeRequest(LocalDate date, String codeFrom, String codeTo) {
+
+        String res = "10";
+
+
+
+        if (codeFrom.equals(codeTo)) {
+            res = "1";
+        }
+        if (codeFrom.equals("ARS") && codeTo.equals("USD")) {
+            res = "0.06";
+        }
+        if (codeFrom.equals("USD") && codeTo.equals("ARS")) {
+            res = "16";
+        }
+        if (codeFrom.equals("BOB") && codeTo.equals("USD")) {
+            res = "0.144";
+        }
+        if (codeFrom.equals("BOB") && codeTo.equals("ARS")) {
+            res = "2.37";
+        }
+        if (codeFrom.equals("PEN") && codeTo.equals("USD")) {
+            res = "0.307";
+        }
+        if (codeFrom.equals("PEN") && codeTo.equals("ARS")) {
+            res = "5.04";
+        }
+        if (codeFrom.equals("EUR") && codeTo.equals("USD")) {
+            res = "1.14";
+        }
+        if (codeFrom.equals("EUR") && codeTo.equals("ARS")) {
+            res = "18.7";
+        }
+
+
+        return res;
+    }
+
     public String requestFromApiYahoo(String code, LocalDate date) throws IOException {
 
         String checkedDate = checkDate(date).toString();

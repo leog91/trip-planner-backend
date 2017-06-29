@@ -37,7 +37,6 @@ public class ItemRest {
     private CurrencyRest currencyRest;
 
 
-
     @RequestMapping(value = "/add/{email}/{day}/{month}/{year}/{name}/{amount}/{currency}/{category}/{groupSize}", method = RequestMethod.GET)
     Item addItem(@PathVariable String email, @PathVariable Integer day, @PathVariable Integer month, @PathVariable Integer year, @PathVariable String name,
                  @PathVariable Float amount, @PathVariable String currency, @PathVariable String category, @PathVariable Integer groupSize) {
@@ -57,7 +56,7 @@ public class ItemRest {
 
     @RequestMapping(value = "/update/{id}/{email}/{day}/{month}/{year}/{name}/{amount}/{currency}/{category}/{groupSize}", method = RequestMethod.GET)
     Item updateItem(@PathVariable Long id, @PathVariable String email, @PathVariable Integer day, @PathVariable Integer month, @PathVariable Integer year, @PathVariable String name,
-                 @PathVariable Float amount, @PathVariable String currency, @PathVariable String category, @PathVariable Integer groupSize) {
+                    @PathVariable Float amount, @PathVariable String currency, @PathVariable String category, @PathVariable Integer groupSize) {
 
         LocalDate date = LocalDate.now().withDayOfMonth(day).withMonthOfYear(month).withYear(year);
 
@@ -72,16 +71,35 @@ public class ItemRest {
         //item.setGroupSize(groupSize);
 
 
-
         return this.itemRepository.save(item);
     }
 
 
+    Float sumItems(String currency, Collection<Item> items) throws IOException {
+
+        Float res = new Float(0);
+
+        for (Item i : items) {
 
 
+            Float iAmount = i.getAmmount();
 
+            String iCurrency = i.getCurrency();
+            LocalDate iDate = i.getDate();
 
+            String sValue = currencyRest.coefByCodeAndDateF(iDate.getDayOfMonth(), iDate.getMonthOfYear(), iDate.getYear(), iCurrency, currency);
 
+            Float value = Float.parseFloat(sValue);
+
+            res = res + value * iAmount;
+
+          //  res = res + iAmount;
+        }
+
+        return res;
+    }
+
+/*
 
     Float sumItems(String currency, Collection<Item> items) throws IOException{
 
@@ -91,7 +109,7 @@ public class ItemRest {
 
 
             Float iAmount = i.getAmmount();
-            /*
+  //          /*
             String iCurrency = i.getCurrency();
             LocalDate iDate = i.getDate();
 
@@ -100,12 +118,12 @@ public class ItemRest {
             Float value =Float.parseFloat(sValue);
 
            res = res + value*iAmount;
-*/
+// /*
             res = res + iAmount;
         }
 
         return res;
-    }
+    }*/
 
 
     @RequestMapping(value = "/item/{name}", method = RequestMethod.GET)
@@ -121,13 +139,11 @@ public class ItemRest {
     }
 
     @RequestMapping(value = "/userSum/{userEmail}/{currency}", method = RequestMethod.GET)
-    Float findByUserSum(@PathVariable String userEmail,@PathVariable String currency) throws IOException {
+    Float findByUserSum(@PathVariable String userEmail, @PathVariable String currency) throws IOException {
 
-        return this.sumItems(currency,this.itemRepository.findByUser(userEmail));
+        return this.sumItems(currency, this.itemRepository.findByUser(userEmail));
 
     }
-
-
 
 
     @RequestMapping(value = "/readId/{id}", method = RequestMethod.GET)
@@ -162,19 +178,18 @@ public class ItemRest {
 
     @RequestMapping(value = "/betweendatesSum/{userEmail}/{dayFrom}/{monthFrom}/{yearFrom}/{dayTo}/{monthTo}/{yearTo}/{currency}", method = RequestMethod.GET)
     Float betweenDatesSum(@PathVariable String userEmail, @PathVariable Integer dayFrom, @PathVariable Integer monthFrom, @PathVariable Integer yearFrom,
-                                  @PathVariable Integer dayTo, @PathVariable Integer monthTo, @PathVariable Integer yearTo , @PathVariable String currency) throws IOException {
+                          @PathVariable Integer dayTo, @PathVariable Integer monthTo, @PathVariable Integer yearTo, @PathVariable String currency) throws IOException {
 
         LocalDate dateFrom = LocalDate.now().withDayOfMonth(dayFrom).withMonthOfYear(monthFrom).withYear(yearFrom);
         LocalDate dateTo = LocalDate.now().withDayOfMonth(dayTo).withMonthOfYear(monthTo).withYear(yearTo);
 
-        return this.sumItems(currency,this.itemRepository.findByDateBetweenAndUser(dateFrom, dateTo, userEmail));
+        return this.sumItems(currency, this.itemRepository.findByDateBetweenAndUser(dateFrom, dateTo, userEmail));
     }
 
     @RequestMapping(value = "/category/{category}", method = RequestMethod.GET)
     Collection<Item> readByCategory(@PathVariable String category) {
         return this.itemRepository.findByCategory(category);
     }
-
 
 
     @RequestMapping(value = "/categoryuser/{userEmail}/{category}", method = RequestMethod.GET)
@@ -185,9 +200,8 @@ public class ItemRest {
     @RequestMapping(value = "/categoryuserSum/{userEmail}/{category}/{currency}", method = RequestMethod.GET)
     Float readByCategoryAndUserSum(@PathVariable String userEmail, @PathVariable String category, @PathVariable String currency) throws IOException {
 
-        return this.sumItems(currency,this.itemRepository.findByCategoryAndUser(category, userEmail));
+        return this.sumItems(currency, this.itemRepository.findByCategoryAndUser(category, userEmail));
     }
-
 
 
     @RequestMapping(value = "/init", method = RequestMethod.GET)
@@ -219,7 +233,6 @@ public class ItemRest {
 
         return this.itemRepository.findByName("Fideos");
     }
-
 
 
     @RequestMapping(value = "/inib", method = RequestMethod.GET)
@@ -262,8 +275,8 @@ public class ItemRest {
     }
 
 
-    public ItemRest(){}
-
+    public ItemRest() {
+    }
 
 
 }
