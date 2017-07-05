@@ -176,14 +176,52 @@ public class CurrencyRest {
 
         LocalDate date = LocalDate.now().withDayOfMonth(day).withMonthOfYear(month).withYear(year);
 
-        Currency currency = new CurrencyBuilder()
-                .withDate(date)
-                .withCodeFrom(codeFrom)
-                .withCodeTo(codeTo)
-                .withRatio(ratio)
-                .build();
+        Currency currency = this.currencyRepository.findByDateAndCodeFromAndCodeTo(date,codeFrom,codeTo);
+
+        if(currency == null){
+
+            currency = new CurrencyBuilder()
+                    .withDate(date)
+                    .withCodeFrom(codeFrom)
+                    .withCodeTo(codeTo)
+                    .withRatio(ratio)
+                    .build();
+        }
+        else {
+            currency.setRatio(ratio);
+        }
+
         return this.currencyRepository.save(currency);
     }
+
+
+
+    @RequestMapping(value = "/adds/{dayFrom}/{monthFrom}/{yearFrom}/{dayTo}/{monthTo}/{yearTo}/{codeFrom}/{codeTo}/{ratio}", method = RequestMethod.GET)
+    Currency addRatios(@PathVariable Integer dayFrom, @PathVariable Integer monthFrom, @PathVariable Integer yearFrom,
+                       @PathVariable Integer dayTo, @PathVariable Integer monthTo, @PathVariable Integer yearTo,
+                       @PathVariable String codeFrom, @PathVariable String codeTo, @PathVariable Float ratio) {
+
+
+        LocalDate dateFrom = LocalDate.now().withDayOfMonth(dayFrom).withMonthOfYear(monthFrom).withYear(yearFrom);
+        LocalDate dateTo = LocalDate.now().withDayOfMonth(dayTo).withMonthOfYear(monthTo).withYear(yearTo);
+
+        if (dateFrom.isAfter(dateTo)){
+            LocalDate aux= dateTo;
+            dateTo = dateFrom;
+            dateFrom = aux;
+        }
+
+        while (dateFrom.isBefore(dateTo)){
+            this.addRatio(dateFrom.getDayOfMonth() ,dateFrom.getMonthOfYear(), dateFrom.getYear() ,codeFrom,codeTo,ratio);
+            dateFrom = dateFrom.plusDays(1);
+        }
+
+        return this.addRatio(dateFrom.getDayOfMonth() ,dateFrom.getMonthOfYear(), dateFrom.getYear() ,codeFrom,codeTo,ratio);
+    }
+
+
+
+
 
 
     @RequestMapping(value = "/load", method = RequestMethod.GET)
