@@ -171,7 +171,7 @@ public class CurrencyRest {
 */
 
 
-    @RequestMapping(value = "/add/{day}/{month}/{year}/{codeFrom}/{codeTo}/{ratio}", method = RequestMethod.GET)
+    @RequestMapping(value = "/add/{day}/{month}/{year}/{ratio}/{codeFrom}/{codeTo}", method = RequestMethod.GET)
     Currency addRatio(@PathVariable Integer day, @PathVariable Integer month, @PathVariable Integer year, @PathVariable String codeFrom, @PathVariable String codeTo, @PathVariable Float ratio) {
 
         LocalDate date = LocalDate.now().withDayOfMonth(day).withMonthOfYear(month).withYear(year);
@@ -196,7 +196,7 @@ public class CurrencyRest {
 
 
 
-    @RequestMapping(value = "/adds/{dayFrom}/{monthFrom}/{yearFrom}/{dayTo}/{monthTo}/{yearTo}/{codeFrom}/{codeTo}/{ratio}", method = RequestMethod.GET)
+    @RequestMapping(value = "/adds/{dayFrom}/{monthFrom}/{yearFrom}/{dayTo}/{monthTo}/{yearTo}/{ratio}/{codeFrom}/{codeTo}", method = RequestMethod.GET)
     Currency addRatios(@PathVariable Integer dayFrom, @PathVariable Integer monthFrom, @PathVariable Integer yearFrom,
                        @PathVariable Integer dayTo, @PathVariable Integer monthTo, @PathVariable Integer yearTo,
                        @PathVariable String codeFrom, @PathVariable String codeTo, @PathVariable Float ratio) {
