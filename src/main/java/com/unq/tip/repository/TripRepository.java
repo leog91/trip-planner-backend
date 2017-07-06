@@ -18,7 +18,5 @@ public interface TripRepository extends CrudRepository<Trip, Long> {
 
     List<Trip> findByUser(String user);
 
-    //List<Trip> findByDateToAndDateFromAndUser(LocalDate dateFrom, LocalDate dateTo, String user);
-
 
 }

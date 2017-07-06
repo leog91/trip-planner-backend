@@ -21,7 +21,7 @@ import java.util.List;
  * Created by Leonardo on 6/4/2017.
  */
 
-//@CrossOrigin(origins = "http://localhost:9000", maxAge = 3600)
+
 @RestController
 @RequestMapping("/item")
 public class ItemRest {
@@ -51,6 +51,7 @@ public class ItemRest {
                 .withCategory(category)
                 .withGroupSize(groupSize)
                 .build();
+
         return this.itemRepository.save(item);
     }
 
@@ -60,16 +61,12 @@ public class ItemRest {
 
         LocalDate date = LocalDate.now().withDayOfMonth(day).withMonthOfYear(month).withYear(year);
 
-
         Item item = this.itemRepository.findOne(id);
-        //item.setUser(email);
         item.setDate(date);
         item.setName(name);
         item.setAmmount(amount);
-        //item.setCurrency(currency);
+        item.setCurrency(currency);
         item.setCategory(category);
-        //item.setGroupSize(groupSize);
-
 
         return this.itemRepository.save(item);
     }
@@ -80,50 +77,17 @@ public class ItemRest {
         Float res = new Float(0);
 
         for (Item i : items) {
-
-
             Float iAmount = i.getAmmount();
-
             String iCurrency = i.getCurrency();
             LocalDate iDate = i.getDate();
-
             String sValue = currencyRest.coefByCodeAndDateF(iDate.getDayOfMonth(), iDate.getMonthOfYear(), iDate.getYear(), iCurrency, currency);
-
             Float value = Float.parseFloat(sValue);
 
             res = res + value * iAmount;
-
-          //  res = res + iAmount;
         }
 
         return res;
     }
-
-/*
-
-    Float sumItems(String currency, Collection<Item> items) throws IOException{
-
-        Float res = new Float(0);
-
-        for (Item i: items) {
-
-
-            Float iAmount = i.getAmmount();
-  //          /*
-            String iCurrency = i.getCurrency();
-            LocalDate iDate = i.getDate();
-
-            String sValue = currencyRest.coefByCodeAndDate(iDate.getDayOfMonth(), iDate.getDayOfMonth(), iDate.getYear(), iCurrency);
-
-            Float value =Float.parseFloat(sValue);
-
-           res = res + value*iAmount;
-// /*
-            res = res + iAmount;
-        }
-
-        return res;
-    }*/
 
 
     @RequestMapping(value = "/item/{name}", method = RequestMethod.GET)
@@ -142,7 +106,6 @@ public class ItemRest {
     Float findByUserSum(@PathVariable String userEmail, @PathVariable String currency) throws IOException {
 
         return this.sumItems(currency, this.itemRepository.findByUser(userEmail));
-
     }
 
 
@@ -152,15 +115,10 @@ public class ItemRest {
     }
 
 
-    //consider flag like is valid
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> deleteById(@PathVariable Long id) {
 
-
         this.itemRepository.delete(id);
-
-        //this.itemRepository.findOne(id); update
-
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -239,7 +197,6 @@ public class ItemRest {
     Collection<Item> initb() {
 
         LocalDate date = new LocalDate().withYear(2016).withMonthOfYear(5).withDayOfMonth(2);
-
 
         Item item1 = new ItemBuilder().withDate(date).withName("Fideos").withCategory("abs").withUser("leog91").withCurrency("ARS").withAmount(15).build();
         itemRepository.save(item1);

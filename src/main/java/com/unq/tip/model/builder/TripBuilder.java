@@ -19,32 +19,33 @@ public class TripBuilder {
     private String name = "";
 
 
-    public TripBuilder withUser(String user){
+    public TripBuilder withUser(String user) {
         this.user = user;
         return this;
     }
 
-    public TripBuilder withInfo(String info){
+    public TripBuilder withInfo(String info) {
         this.info = info;
         return this;
     }
-    public TripBuilder withName(String name){
+
+    public TripBuilder withName(String name) {
         this.name = name;
         return this;
     }
 
-    public TripBuilder withDateFrom(LocalDate dateFrom){
+    public TripBuilder withDateFrom(LocalDate dateFrom) {
         this.dateFrom = dateFrom;
         return this;
     }
 
-    public TripBuilder withDateTo(LocalDate dateTo){
+    public TripBuilder withDateTo(LocalDate dateTo) {
         this.dateTo = dateTo;
         return this;
     }
 
-    public Trip build(){
-        return new Trip(dateFrom,dateTo,info,user,name);
+    public Trip build() {
+        return new Trip(dateFrom, dateTo, info, user, name);
     }
 
 

@@ -31,11 +31,11 @@ public class User {
         this.categories = categories;
     }
 
-    public void addCategory(String category){
+    public void addCategory(String category) {
         this.categories.add(category);
     }
 
-    public void removeCategory(String category){
+    public void removeCategory(String category) {
         this.categories.remove(category);
     }
 

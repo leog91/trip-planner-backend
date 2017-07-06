@@ -19,11 +19,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @SpringBootApplication
 public class TripplannerApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(TripplannerApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(TripplannerApplication.class, args);
+    }
 /*
-	@Bean
+    @Bean
 	public JodaModule jacksonJodaModule() {
 		JodaModule module = new JodaModule();
 		DateTimeFormatterFactory formatterFactory = new DateTimeFormatterFactory();
@@ -34,21 +34,20 @@ public class TripplannerApplication {
 		return module;
 	}*/
 
-	@Bean
-	public WebMvcConfigurer corsConfigurer() {
-		return new WebMvcConfigurerAdapter() {
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurerAdapter() {
 			/*@Override
 			public void addCorsMappings(CorsRegistry registry) {
 				registry.addMapping("/greeting-javaconfig").allowedOrigins("http://localhost:9000");
 			}*/
 
-			@Override
-			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/**");
-			}
-		};
-	}
-
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**");
+            }
+        };
+    }
 
 
 }

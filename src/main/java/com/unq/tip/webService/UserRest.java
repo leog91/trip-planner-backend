@@ -78,32 +78,12 @@ public class UserRest {
         }
 
 
-/*
-        //no except-
-        Collection<Item> items = itemRest.readByCategoryAndUser(email,category);
-        items.stream().map(item -> item.toGeneralCategory());
-        itemRepository.save(items);
-        //
-*/
+        Collection<Item> items = itemRest.readByCategoryAndUser(email, category);
 
-
-        //
-       Collection<Item> items = itemRest.readByCategoryAndUser(email,category);
-
-        for (Item i: items) {
+        for (Item i : items) {
             i.toGeneralCategory();
             itemRepository.save(i);
         }
-
-
-/*
-        ItemRest itemRest = new ItemRest();
-        Collection<Item> items = itemRest.readByCategoryAndUser(email,category);
-
-        Stream<Item> generalItems = items.stream().map(item -> item.toGeneralCategory());
-        generalItems.map(item -> itemRepository.save(item));
-*/
-
 
         user.removeCategory(category);
         this.userRepository.save(user);

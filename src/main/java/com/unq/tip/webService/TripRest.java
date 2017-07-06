@@ -35,7 +35,7 @@ public class TripRest {
     private TripRepository tripRepository;
 
     @Autowired
-    private ItemRest itemRest ;//= new ItemRest();
+    private ItemRest itemRest;
 
 
     @RequestMapping(value = "/user/{userEmail}", method = RequestMethod.GET)
@@ -49,11 +49,9 @@ public class TripRest {
 
 
         Trip trip = this.tripRepository.findOne(id);
-        if(trip != null ){
-            return itemRepository.findByDateBetweenAndUser(trip.getDateFrom(),trip.getDateTo(),trip.getUser());
-        }
-        else
-        {//safe
+        if (trip != null) {
+            return itemRepository.findByDateBetweenAndUser(trip.getDateFrom(), trip.getDateTo(), trip.getUser());
+        } else {
             return new ArrayList<Item>();
         }
     }
@@ -62,12 +60,10 @@ public class TripRest {
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> deleteById(@PathVariable Long id) {
 
-
         this.tripRepository.delete(id);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
 
 
     @RequestMapping(value = "/add/{email}/{dayFrom}/{monthFrom}/{yearFrom}/{dayTo}/{monthTo}/{yearTo}/{name}/{info}", method = RequestMethod.GET)
@@ -78,7 +74,7 @@ public class TripRest {
 
         LocalDate dateFrom = LocalDate.now().withDayOfMonth(dayFrom).withMonthOfYear(monthFrom).withYear(yearFrom);
         LocalDate dateTo = LocalDate.now().withDayOfMonth(dayTo).withMonthOfYear(monthTo).withYear(yearTo);
-        Trip trip= new TripBuilder()
+        Trip trip = new TripBuilder()
                 .withDateFrom(dateFrom)
                 .withDateTo(dateTo)
                 .withInfo(info)
@@ -87,9 +83,6 @@ public class TripRest {
                 .build();
         return this.tripRepository.save(trip);
     }
-
-
-
 
 
 }

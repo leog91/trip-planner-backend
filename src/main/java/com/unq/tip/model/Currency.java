@@ -58,8 +58,6 @@ public class Currency {
 
         String res = "10";
 
-
-
         if (codeFrom.equals(codeTo)) {
             res = "1";
         }

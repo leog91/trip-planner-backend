@@ -76,7 +76,7 @@ public class Item {
     }
 
 
-    public Item toGeneralCategory(){
+    public Item toGeneralCategory() {
         this.category = "General";
         return this;
     }
